@@ -1,0 +1,9 @@
+*.pdf binary
+*.png binary
+*.mp4 binary
+# Conserver les sorties brutes des outils, y compris leurs espaces de formatage.
+evidence/*.txt -whitespace
+evidence/ci/*.log -whitespace
+
+# Les journaux importés restent des preuves brutes.
+evidence/**/*.log -whitespace

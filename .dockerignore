@@ -1,0 +1,9 @@
+.git
+node_modules
+logs
+tmp
+output
+evidence
+analysis
+
+.venv

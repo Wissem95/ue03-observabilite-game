@@ -1,0 +1,15 @@
+node_modules/
+logs/
+tmp/
+output/*
+!output/pdf/
+output/pdf/*
+!output/pdf/rapport-observabilite.pdf
+analysis/*.sqlite*
+analysis/*.jsonl
+.env
+.DS_Store
+
+.venv/
+
+*.mp4
