@@ -1,0 +1,39 @@
+groups:
+  - name: game
+    rules:
+      - record: game:http_rps:rate5m
+        expr: sum(rate(game_http_requests_total[5m]))
+      - record: game:http_error_ratio:rate5m
+        expr: (sum(rate(game_http_requests_total{status=~"5.."}[5m])) or vector(0)) / clamp_min(sum(rate(game_http_requests_total[5m])), 0.001)
+      - record: game:overlay_ratio:rate5m
+        expr: sum(rate(game_reports_total{cause="overlay"}[5m])) / clamp_min(sum(rate(game_reports_total{cause!~"inconsistent|background|shader|unknown"}[5m])), 0.001)
+      - alert: ServiceUnavailable
+        expr: up{job="game"} == 0
+        for: 1m
+        labels: {severity: critical}
+        annotations: {summary: "Le service est injoignable depuis une minute"}
+      - alert: ApiErrors
+        expr: game:http_error_ratio:rate5m > 0.05 and game:http_rps:rate5m > 1
+        for: 2m
+        labels: {severity: warning}
+        annotations: {summary: "Plus de 5 % de réponses 5xx sous trafic significatif"}
+      - alert: OverlayRegression
+        expr: game:overlay_ratio:rate5m > 0.15 and sum(increase(game_reports_total[5m])) > 20
+        for: 2m
+        labels: {severity: warning}
+        annotations: {summary: "La signature overlay dépasse 15 % des rapports éligibles"}
+      - alert: InconsistentTelemetry
+        expr: sum(increase(game_integrity_signals_total{kind="inconsistent"}[10m])) > 2
+        for: 1m
+        labels: {severity: warning}
+        annotations: {summary: "Au moins trois rapports temporellement incohérents"}
+      - alert: ServerTickDegraded
+        expr: sum(increase(game_reports_total{cause="server_tick"}[5m])) >= 3
+        for: 1m
+        labels: {severity: warning}
+        annotations: {summary: "Plusieurs clients signalent RTT et tick dégradés"}
+      - alert: RepeatedShortWins
+        expr: sum(increase(game_integrity_signals_total{kind="short_win",origin="fleet"}[10m])) >= 5
+        for: 1m
+        labels: {severity: warning}
+        annotations: {summary: "Au moins cinq victoires vault 3-0 en moins de 90 secondes de jeu"}

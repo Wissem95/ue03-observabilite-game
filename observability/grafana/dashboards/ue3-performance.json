@@ -1,0 +1,333 @@
+{
+  "uid": "ue3-performance",
+  "title": "2 · Performance côté joueur",
+  "tags": [
+    "UE03",
+    "observabilite"
+  ],
+  "timezone": "Europe/Paris",
+  "schemaVersion": 41,
+  "version": 1,
+  "editable": false,
+  "refresh": "",
+  "time": {
+    "from": "2026-09-19T22:00:00.000Z",
+    "to": "2026-09-26T22:10:00.000Z"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Combien de rapports uniques contient l’export ?",
+      "description": "Combien de rapports uniques contient l’export ?",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(count_over_time({job=\"game\",source=\"historical\",event=\"perf_spike\"}[$__range]))",
+          "maxLines": 30,
+          "queryType": "instant",
+          "instant": true,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Combien présentent la signature overlay ?",
+      "description": "Combien présentent la signature overlay ?",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(count_over_time({job=\"game\",source=\"historical\",event=\"perf_spike\"} | json cause=\"cause\" | cause=\"overlay\" [$__range]))",
+          "maxLines": 30,
+          "queryType": "instant",
+          "instant": true,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Quelles signatures apparaissent et quand ?",
+      "description": "Quelles signatures apparaissent et quand ?",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by(cause)(count_over_time({job=\"game\",source=\"historical\",event=\"perf_spike\"} | json cause=\"cause\" [1h]))",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Quels builds concentrent les pics overlay ?",
+      "description": "Quels builds concentrent les pics overlay ?",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 9,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by(build)(count_over_time({job=\"game\",source=\"historical\",event=\"perf_spike\"} | json cause=\"cause\", build=\"build\" | cause=\"overlay\" [1h]))",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Quels clients et configurations sont concernés ?",
+      "description": "Quels clients et configurations sont concernés ?",
+      "type": "logs",
+      "gridPos": {
+        "x": 0,
+        "y": 18,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"game\",source=\"historical\",event=\"perf_spike\"} | json | cause=\"overlay\" | line_format \"event={{.event}} cause={{.cause}} client={{.client_id}} partie={{.server_id}} build={{.build}} frame={{.frame_ms}}ms overlay={{.overlay_ms}}ms duree={{.duration_s}}s\"",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Quels rapports sont incohérents ?",
+      "description": "Quels rapports sont incohérents ?",
+      "type": "logs",
+      "gridPos": {
+        "x": 12,
+        "y": 18,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"game\",source=\"historical\",event=\"perf_spike\"} | json | cause=\"inconsistent\" | line_format \"event={{.event}} cause={{.cause}} client={{.client_id}} partie={{.server_id}} build={{.build}} frame={{.frame_ms}}ms overlay={{.overlay_ms}}ms duree={{.duration_s}}s\"",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending"
+      }
+    }
+  ]
+}

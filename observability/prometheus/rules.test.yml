@@ -1,0 +1,86 @@
+rule_files: [rules.yml]
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'up{job="game",instance="app:8080"}'
+        values: '0 0 0'
+    alert_rule_test:
+      - eval_time: 2m
+        alertname: ServiceUnavailable
+        exp_alerts:
+          - exp_labels: {job: game, instance: 'app:8080', severity: critical}
+            exp_annotations: {summary: "Le service est injoignable depuis une minute"}
+  - interval: 1m
+    input_series:
+      - series: 'up{job="game",instance="app:8080"}'
+        values: '1 1 1'
+    alert_rule_test:
+      - eval_time: 2m
+        alertname: ServiceUnavailable
+        exp_alerts: []
+  - interval: 1m
+    input_series:
+      - series: 'game_integrity_signals_total{kind="inconsistent",origin="ingest"}'
+        values: '0+1x20'
+    alert_rule_test:
+      - eval_time: 10m
+        alertname: InconsistentTelemetry
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: "Au moins trois rapports temporellement incohérents"}
+  - interval: 1m
+    input_series:
+      - series: 'game_reports_total{cause="overlay",build="beta-20260926-6",origin="ingest"}'
+        values: '0+40x20'
+      - series: 'game_reports_total{cause="render_other",build="beta-20260926-6",origin="ingest"}'
+        values: '0+160x20'
+      - series: 'game_reports_total{cause="server_tick",build="beta-20260926-6",origin="fleet"}'
+        values: '0+2x20'
+      - series: 'game_integrity_signals_total{kind="short_win",origin="fleet"}'
+        values: '0+2x20'
+      - series: 'game_http_requests_total{method="POST",route="/api/reports",status="500"}'
+        values: '0+10x20'
+      - series: 'game_http_requests_total{method="POST",route="/api/reports",status="202"}'
+        values: '0+100x20'
+    alert_rule_test:
+      - eval_time: 10m
+        alertname: OverlayRegression
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: "La signature overlay dépasse 15 % des rapports éligibles"}
+      - eval_time: 10m
+        alertname: ApiErrors
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: "Plus de 5 % de réponses 5xx sous trafic significatif"}
+      - eval_time: 10m
+        alertname: ServerTickDegraded
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: "Plusieurs clients signalent RTT et tick dégradés"}
+      - eval_time: 10m
+        alertname: RepeatedShortWins
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: "Au moins cinq victoires vault 3-0 en moins de 90 secondes de jeu"}
+  - interval: 1m
+    input_series:
+      - series: 'game_reports_total{cause="overlay",build="beta-20260926-6",origin="ingest"}'
+        values: '0+1x20'
+      - series: 'game_reports_total{cause="render_other",build="beta-20260926-6",origin="ingest"}'
+        values: '0+100x20'
+      - series: 'game_reports_total{cause="server_tick",build="beta-20260926-6",origin="fleet"}'
+        values: '0+0x20'
+      - series: 'game_integrity_signals_total{kind="short_win",origin="fleet"}'
+        values: '0+0x20'
+      - series: 'game_integrity_signals_total{kind="inconsistent",origin="ingest"}'
+        values: '0+0x20'
+      - series: 'game_http_requests_total{method="POST",route="/api/reports",status="202"}'
+        values: '0+100x20'
+    alert_rule_test:
+      - {eval_time: 10m, alertname: OverlayRegression, exp_alerts: []}
+      - {eval_time: 10m, alertname: ApiErrors, exp_alerts: []}
+      - {eval_time: 10m, alertname: ServerTickDegraded, exp_alerts: []}
+      - {eval_time: 10m, alertname: RepeatedShortWins, exp_alerts: []}
+      - {eval_time: 10m, alertname: InconsistentTelemetry, exp_alerts: []}

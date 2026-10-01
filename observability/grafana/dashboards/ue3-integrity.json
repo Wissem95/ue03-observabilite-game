@@ -1,0 +1,333 @@
+{
+  "uid": "ue3-integrity",
+  "title": "3 · Activité et intégrité",
+  "tags": [
+    "UE03",
+    "observabilite"
+  ],
+  "timezone": "Europe/Paris",
+  "schemaVersion": 41,
+  "version": 1,
+  "editable": false,
+  "refresh": "",
+  "time": {
+    "from": "2026-09-19T22:00:00.000Z",
+    "to": "2026-09-26T22:10:00.000Z"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Combien de parties terminées sont observées ?",
+      "description": "Combien de parties terminées sont observées ?",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(count_over_time({job=\"game\",source=\"historical\",event=\"game_completed\"}[$__range]))",
+          "maxLines": 30,
+          "queryType": "instant",
+          "instant": true,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Combien de victoires vault 3-0 durent moins de 90 s ?",
+      "description": "Combien de victoires vault 3-0 durent moins de 90 s ?",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(count_over_time({job=\"game\",source=\"historical\",event=\"game_completed\"} | json short_win=\"short_win\" | short_win=\"true\" [$__range]))",
+          "maxLines": 30,
+          "queryType": "instant",
+          "instant": true,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "area"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Quand surviennent les victoires courtes ?",
+      "description": "Quand surviennent les victoires courtes ?",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 9,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(count_over_time({job=\"game\",source=\"historical\",event=\"game_completed\"} | json short_win=\"short_win\" | short_win=\"true\" [30m]))",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "Quand le tick serveur dépasse-t-il 150 ms ?",
+      "description": "Quand le tick serveur dépasse-t-il 150 ms ?",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 12,
+        "y": 9,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(count_over_time({job=\"game\",source=\"historical\"} | json tick_gap_ms=\"tick_gap_ms\" | tick_gap_ms >= 150 | __error__=\"\" [30m]))",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Quelles parties faut-il examiner ?",
+      "description": "Quelles parties faut-il examiner ?",
+      "type": "logs",
+      "gridPos": {
+        "x": 0,
+        "y": 18,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"game\",source=\"historical\",event=\"game_completed\"} | json | short_win=\"true\" | line_format \"event={{.event}} cause={{.cause}} client={{.client_id}} partie={{.server_id}} build={{.build}} frame={{.frame_ms}}ms overlay={{.overlay_ms}}ms duree={{.duration_s}}s\"",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Quelles observations soutiennent le diagnostic serveur ?",
+      "description": "Quelles observations soutiennent le diagnostic serveur ?",
+      "type": "logs",
+      "gridPos": {
+        "x": 12,
+        "y": 18,
+        "w": 12,
+        "h": 9
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"game\",source=\"historical\",event=\"perf_spike\"} | json | cause=\"server_tick\" | line_format \"event={{.event}} cause={{.cause}} client={{.client_id}} partie={{.server_id}} build={{.build}} frame={{.frame_ms}}ms overlay={{.overlay_ms}}ms duree={{.duration_s}}s\"",
+          "maxLines": 30,
+          "queryType": "range",
+          "instant": false,
+          "legendFormat": "{{cause}} {{build}}",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 8
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending"
+      }
+    }
+  ]
+}
