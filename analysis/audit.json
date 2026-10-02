@@ -1,0 +1,442 @@
+[
+  {
+    "kind": "duplicate",
+    "index": 26,
+    "line": 2532,
+    "original": 25,
+    "hash": "2cbdea4490d446d59b1847d08001bcff3b3e0eddedcd45d08164e344d96a988b",
+    "ts": "2026-09-26T20:54:19.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 60,
+    "line": 5602,
+    "original": 59,
+    "hash": "d01886fb26861c138b70d0f655b38e90b239dd7362319a5ff92f83965b62b760",
+    "ts": "2026-09-26T20:02:32.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 126,
+    "line": 11776,
+    "original": 125,
+    "hash": "b399fdc44ea516a6574aeea636372e4e7545ff23ac7d8751d322987c2dff0fd9",
+    "ts": "2026-09-26T18:31:56.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 344,
+    "line": 32444,
+    "original": 343,
+    "hash": "e00c86ff0268644d303c7b86f5feeaccf0fb7b079eae69f5967446f3917a04a3",
+    "ts": "2026-09-26T11:09:22.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 396,
+    "line": 37670,
+    "original": 395,
+    "hash": "96ba156133f2e15b8f6f80bb626c4c6ec773c00d263738a8e716899fab5c49a2",
+    "ts": "2026-09-26T08:24:32.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 449,
+    "line": 42827,
+    "original": 448,
+    "hash": "8d27c141e11d217288e130a97b66ef3c7849745e50a3962399a8e25172127b52",
+    "ts": "2026-09-26T01:42:34.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 502,
+    "line": 47770,
+    "original": 501,
+    "hash": "7ecbf497170eeaab1c29e4b5f3f471809ac981acf076c45d52b7c0f61d0c396d",
+    "ts": "2026-09-25T21:05:45.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 504,
+    "line": 48000,
+    "original": 503,
+    "hash": "0fc533b16fc13087e7d5208876e29b41876317f3829ec2e959684e056464fa5c",
+    "ts": "2026-09-25T21:04:22.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 576,
+    "line": 55066,
+    "original": 575,
+    "hash": "b98d45d7280302f221f56b6f062b79b97b6aa9ae355cf17ebe6dbe0104cb9634",
+    "ts": "2026-09-25T19:10:31.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 670,
+    "line": 64024,
+    "original": 669,
+    "hash": "59c3d792b3b782ded3038438140f997a704abc90204a13dc7626da7a49852610",
+    "ts": "2026-09-25T16:21:23.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 684,
+    "line": 65542,
+    "original": 683,
+    "hash": "279cb74d8daade6578a3378abdbf4844258391835747b5688aa7fa6b758c3987",
+    "ts": "2026-09-25T15:52:59.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 718,
+    "line": 68600,
+    "original": 717,
+    "hash": "3a9a86adbb0f49405e00da90856fd586ddc7a3752d89dc9aa3f52e843f10f366",
+    "ts": "2026-09-25T14:27:06.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 765,
+    "line": 73545,
+    "original": 764,
+    "hash": "cb94425e1c6e75e8f0caed8cc2160e8ba584e33e032c73496cb0e548b332a02e",
+    "ts": "2026-09-25T12:55:40.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 840,
+    "line": 80870,
+    "original": 839,
+    "hash": "d88d96d49bc3107b9b654015fe652f328f7ca9f2064df228fa3010da0c88f6a6",
+    "ts": "2026-09-25T09:51:04.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 878,
+    "line": 84486,
+    "original": 877,
+    "hash": "34cbb8c7e88af9197b367a69c01ecda6ead81aee21676bafc620d6530dad3ead",
+    "ts": "2026-09-25T07:43:03.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 900,
+    "line": 86734,
+    "original": 899,
+    "hash": "e31242aec26fd2298c44f2e77365f7780a6d4e59f4831bc0a6e8c18aeb93c330",
+    "ts": "2026-09-25T06:35:25.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1026,
+    "line": 96202,
+    "original": 1025,
+    "hash": "05f34842ac8199e8b3a0f810520e55d79e34d37192843960d602a316b9b6a166",
+    "ts": "2026-09-24T22:06:31.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1050,
+    "line": 98404,
+    "original": 1049,
+    "hash": "85beed16ba23ea76d04d8262bc36a403a2a9293bfc39a319f47226b354a1ca34",
+    "ts": "2026-09-24T21:05:47.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1053,
+    "line": 98565,
+    "original": 1052,
+    "hash": "f75b9d280896964ae00a0077e275cb33c258c7ae5910328163417c99766a3809",
+    "ts": "2026-09-24T21:01:17.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1082,
+    "line": 100968,
+    "original": 1081,
+    "hash": "03cbb0f766a56337bb2c8ef80b12a040bda4a0f2d6863d26bbed0f1416e49f81",
+    "ts": "2026-09-24T19:21:24.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1086,
+    "line": 101244,
+    "original": 1085,
+    "hash": "6c8a3435fe2ac8d2f5784021a388fba6405d078a38e3d2558fb53b7419e59a91",
+    "ts": "2026-09-24T19:21:02.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1153,
+    "line": 107637,
+    "original": 1152,
+    "hash": "bedbad723673e628ebbd69f935f8d703aa53be3c6825426ee65288fef401ad57",
+    "ts": "2026-09-24T17:45:53.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1221,
+    "line": 113599,
+    "original": 1220,
+    "hash": "38226df9090b0a01ec44bc57c2e8b35bb5de6e6cb18a84ad736690cf23c569bd",
+    "ts": "2026-09-24T15:11:19.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1364,
+    "line": 126464,
+    "original": 1363,
+    "hash": "0eb9c42e9fa19cdc6eeecefcc77a6e43380d90e26710761383ea60c8ccf8e049",
+    "ts": "2026-09-24T07:00:17.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1373,
+    "line": 127309,
+    "original": 1372,
+    "hash": "26d8ebbe07c1ecaab71a1bd04e2fdd5e59681632f7b91e908611cc3d39728407",
+    "ts": "2026-09-24T06:10:45.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1400,
+    "line": 129482,
+    "original": 1398,
+    "hash": "8044e5ec935980014474063158da7031b7a85ea39ee02f93264ed3ecf1e9f576",
+    "ts": "2026-09-23T23:19:08.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1417,
+    "line": 130977,
+    "original": 1416,
+    "hash": "17da60cad634bf5ee6be12e145283e704c9f8d40385f2c3c72b46699b0db7fd8",
+    "ts": "2026-09-23T21:58:56.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1432,
+    "line": 132132,
+    "original": 1431,
+    "hash": "72b1db22cfb976d801561e31615d635388d54af526124ba97fcfbcc805318d7b",
+    "ts": "2026-09-23T20:43:08.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1494,
+    "line": 137668,
+    "original": 1493,
+    "hash": "c137bc1fc42788793e8e1618d7439f7e10e0ffec9ddc4a8818553aeb7370edc4",
+    "ts": "2026-09-23T18:55:56.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1545,
+    "line": 142215,
+    "original": 1544,
+    "hash": "4f4fee7d5a636ca6f8dd096bc7f434e4a64df0549612e0d36739afed16502401",
+    "ts": "2026-09-23T17:35:29.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1603,
+    "line": 147407,
+    "original": 1602,
+    "hash": "b563fa8165cc225cba2fa46de3b6d04bd74619b97c67ecd4eda0265030191935",
+    "ts": "2026-09-23T15:10:59.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1607,
+    "line": 147867,
+    "original": 1606,
+    "hash": "0b088fd3cdd43b26a824e03b618232bd98040f812f9ba36e8876af7403209bc8",
+    "ts": "2026-09-23T15:07:47.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1622,
+    "line": 149224,
+    "original": 1621,
+    "hash": "1126abe7e7bf888449111554be67aeacac79045f127ce8d1ad436f434c668c5d",
+    "ts": "2026-09-23T13:54:37.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1640,
+    "line": 150920,
+    "original": 1639,
+    "hash": "119ad30b39e979ae5c9961ca06a7163b1597ed173a6925ee8265fabf2f1fb438",
+    "ts": "2026-09-23T12:58:33.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1695,
+    "line": 155951,
+    "original": 1694,
+    "hash": "e0e3764526e78fe9e0ce2ac9dad44daff1a95b37aa988161a66220d6dc66e50d",
+    "ts": "2026-09-23T10:56:51.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1738,
+    "line": 159780,
+    "original": 1737,
+    "hash": "c6b26164d3c0568e011f7872f55e3fd5163b8f31b5d956e7e587751ce3072f2f",
+    "ts": "2026-09-23T07:22:16.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1848,
+    "line": 167076,
+    "original": 1847,
+    "hash": "a0928c272deaa9de22437cb65d5cc80beb097c7bd02445898b9e5a39f69f16f4",
+    "ts": "2026-09-22T23:18:45.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1855,
+    "line": 167605,
+    "original": 1854,
+    "hash": "1b6a2ea34e75375397c3f5ad11706d7dbe2e2c61298efe0b98194fc274c9cf94",
+    "ts": "2026-09-22T22:45:21.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1979,
+    "line": 178627,
+    "original": 1978,
+    "hash": "d8dcfb97f819f5c7814544cd4f0fcda8734efa72fab882251e614e5db0cba8e6",
+    "ts": "2026-09-22T18:16:20.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 1989,
+    "line": 179501,
+    "original": 1988,
+    "hash": "7573342a423b5a6e1887794bfb4851845fc8fc0babfd3f2c9d8e0c3af9dcdf4c",
+    "ts": "2026-09-22T18:01:38.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2072,
+    "line": 186968,
+    "original": 2071,
+    "hash": "efb522b3944893f6bbfb165f52a7505e254dbb715f5e22297f89e50cb3ed83e6",
+    "ts": "2026-09-22T11:53:07.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2142,
+    "line": 193258,
+    "original": 2141,
+    "hash": "4274f268fccaffcefe2489559176c2e2918b74612d3db9d60df9a6b3af4758b5",
+    "ts": "2026-09-22T07:27:44.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2174,
+    "line": 195920,
+    "original": 2173,
+    "hash": "2fadc4c3a6119422390f0057c6183a65e4b63f3d9a72e464d71308fca27348c6",
+    "ts": "2026-09-22T00:42:37.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2242,
+    "line": 201796,
+    "original": 2241,
+    "hash": "ec6495a018e3c11a187bf06bb6a40fd8daffda50f9b0264a418ca43268d7b2f1",
+    "ts": "2026-09-21T19:33:38.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2327,
+    "line": 209425,
+    "original": 2326,
+    "hash": "aa66d27cd33a95efb14c325da09dfd8b1ac4ad3ab81cc03571b641a5fa1ab124",
+    "ts": "2026-09-21T16:21:25.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2387,
+    "line": 214749,
+    "original": 2386,
+    "hash": "4d1821a27f5ab96be2c5e6039a78a484323c740063238f370ea28d93ce85d37f",
+    "ts": "2026-09-21T12:46:26.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2405,
+    "line": 216083,
+    "original": 2404,
+    "hash": "d43c1443734650afa153272fbd88bc51cb5859b03afe1eff54cd642acab9cfb3",
+    "ts": "2026-09-21T11:19:33.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2488,
+    "line": 223574,
+    "original": 2487,
+    "hash": "d32c47fd843e4a7f40fd73c9cfc1ad348429811e0edc2aee883f09126b8abbbd",
+    "ts": "2026-09-21T05:11:33.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2600,
+    "line": 233720,
+    "original": 2599,
+    "hash": "fbaff1be9373ed1afe6aa1800b7f8d593eb4bff6971feb0f1a05d26e8e398d8e",
+    "ts": "2026-09-20T20:21:00.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2711,
+    "line": 243805,
+    "original": 2710,
+    "hash": "bfb31c1bd999e3e6007c11d2b6d668f69ebb83a255026fdb48fcd9f2889216ee",
+    "ts": "2026-09-20T17:26:18.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2736,
+    "line": 245840,
+    "original": 2735,
+    "hash": "b9dcc391642ef7f5388bf20abb528fc43cc0bff3f9af9c2284b0ace63e1eed4b",
+    "ts": "2026-09-20T15:43:35.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2765,
+    "line": 248439,
+    "original": 2764,
+    "hash": "a6b74e11b6e489c78a7939fac587b7b1dafc1e33d8f487fc16266beabb5eaf8d",
+    "ts": "2026-09-20T13:51:53.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2780,
+    "line": 249882,
+    "original": 2779,
+    "hash": "621badecc9a941c30c85ee3dd8a28db7e422dee7bb0e9e5681b427793ac5a61d",
+    "ts": "2026-09-20T13:26:13.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2805,
+    "line": 251923,
+    "original": 2804,
+    "hash": "097e2f36cec5549dee09db66e6e6eb7b42374f3e42407da910d377c070111825",
+    "ts": "2026-09-20T12:04:57.000Z"
+  },
+  {
+    "kind": "duplicate",
+    "index": 2853,
+    "line": 256235,
+    "original": 2852,
+    "hash": "e46e6b2eb5a548561b545ff515abe90e1da2a4aa00e811ae4d0e1a820d44485d",
+    "ts": "2026-09-20T09:36:12.000Z"
+  }
+]

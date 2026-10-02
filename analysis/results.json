@@ -1,0 +1,2596 @@
+{
+  "input": "data/admin-export-2026-09-20_26.log",
+  "sha256": "4e4679501817517615eb5f9521fd9ff8a09fb256009ddb8794c49b8d34ee0e1b",
+  "raw_bytes": 6072091,
+  "blocks": 2944,
+  "unique": 2889,
+  "audit": {
+    "duplicate": 55
+  },
+  "first": "2026-09-19T22:31:37.000Z",
+  "last": "2026-09-26T22:04:13.000Z",
+  "results": {
+    "Q01_volumetrie": {
+      "sql": "SELECT event, count(*) AS n, min(ts) AS debut_utc,max(ts) AS fin_utc FROM events GROUP BY event;",
+      "rows": [
+        {
+          "event": "game_completed",
+          "n": 779,
+          "debut_utc": "2026-09-19T22:33:14.000Z",
+          "fin_utc": "2026-09-26T22:04:13.000Z"
+        },
+        {
+          "event": "perf_spike",
+          "n": 2110,
+          "debut_utc": "2026-09-19T22:31:37.000Z",
+          "fin_utc": "2026-09-26T22:02:52.000Z"
+        }
+      ]
+    },
+    "Q02_qualite_import": {
+      "sql": "SELECT kind,count(*) AS n FROM audit GROUP BY kind;",
+      "rows": [
+        {
+          "kind": "duplicate",
+          "n": 55
+        }
+      ]
+    },
+    "Q03_classes": {
+      "sql": "SELECT cause,count(*) AS n,count(DISTINCT client_id) AS clients,count(DISTINCT server_id) AS parties,min(ts) AS debut_utc,max(ts) AS fin_utc FROM events WHERE event='perf_spike' GROUP BY cause ORDER BY n DESC;",
+      "rows": [
+        {
+          "cause": "render_other",
+          "n": 1049,
+          "clients": 218,
+          "parties": 563,
+          "debut_utc": "2026-09-19T22:31:37.000Z",
+          "fin_utc": "2026-09-26T22:01:11.000Z"
+        },
+        {
+          "cause": "shader",
+          "n": 459,
+          "clients": 207,
+          "parties": 459,
+          "debut_utc": "2026-09-19T22:38:28.000Z",
+          "fin_utc": "2026-09-26T21:56:52.000Z"
+        },
+        {
+          "cause": "overlay",
+          "n": 262,
+          "clients": 53,
+          "parties": 66,
+          "debut_utc": "2026-09-20T16:51:52.000Z",
+          "fin_utc": "2026-09-26T22:02:52.000Z"
+        },
+        {
+          "cause": "background",
+          "n": 158,
+          "clients": 111,
+          "parties": 158,
+          "debut_utc": "2026-09-20T00:53:57.000Z",
+          "fin_utc": "2026-09-26T21:05:35.000Z"
+        },
+        {
+          "cause": "network",
+          "n": 85,
+          "clients": 72,
+          "parties": 85,
+          "debut_utc": "2026-09-19T22:32:42.000Z",
+          "fin_utc": "2026-09-26T22:00:44.000Z"
+        },
+        {
+          "cause": "inconsistent",
+          "n": 70,
+          "clients": 1,
+          "parties": 70,
+          "debut_utc": "2026-09-24T07:35:45.000Z",
+          "fin_utc": "2026-09-26T20:37:37.000Z"
+        },
+        {
+          "cause": "world",
+          "n": 20,
+          "clients": 20,
+          "parties": 20,
+          "debut_utc": "2026-09-20T22:33:56.000Z",
+          "fin_utc": "2026-09-24T19:22:14.000Z"
+        },
+        {
+          "cause": "server_tick",
+          "n": 7,
+          "clients": 3,
+          "parties": 3,
+          "debut_utc": "2026-09-21T00:57:51.000Z",
+          "fin_utc": "2026-09-23T01:09:22.000Z"
+        }
+      ]
+    },
+    "Q04_build": {
+      "sql": "SELECT build,count(*) AS rapports,sum(cause='overlay') AS overlay,sum(cause='inconsistent') AS incoherents,round(avg(CASE WHEN cause NOT IN ('inconsistent','background','shader') THEN frame_ms END),1) AS moyenne_filtre_ms,min(ts) AS debut_utc,max(ts) AS fin_utc FROM events WHERE event='perf_spike' GROUP BY build;",
+      "rows": [
+        {
+          "build": "beta-20260919-2",
+          "rapports": 641,
+          "overlay": 5,
+          "incoherents": 0,
+          "moyenne_filtre_ms": 116.9,
+          "debut_utc": "2026-09-19T22:31:37.000Z",
+          "fin_utc": "2026-09-23T10:07:57.000Z"
+        },
+        {
+          "build": "beta-20260922-1",
+          "rapports": 625,
+          "overlay": 4,
+          "incoherents": 0,
+          "moyenne_filtre_ms": 104.3,
+          "debut_utc": "2026-09-22T10:10:08.000Z",
+          "fin_utc": "2026-09-25T12:16:21.000Z"
+        },
+        {
+          "build": "beta-20260924-3",
+          "rapports": 648,
+          "overlay": 190,
+          "incoherents": 70,
+          "moyenne_filtre_ms": 268.7,
+          "debut_utc": "2026-09-24T07:35:45.000Z",
+          "fin_utc": "2026-09-26T20:37:37.000Z"
+        },
+        {
+          "build": "beta-20260926-5",
+          "rapports": 171,
+          "overlay": 59,
+          "incoherents": 0,
+          "moyenne_filtre_ms": 267,
+          "debut_utc": "2026-09-26T10:32:23.000Z",
+          "fin_utc": "2026-09-26T22:02:52.000Z"
+        },
+        {
+          "build": "beta-20260926-6",
+          "rapports": 25,
+          "overlay": 4,
+          "incoherents": 0,
+          "moyenne_filtre_ms": 171.7,
+          "debut_utc": "2026-09-26T18:50:28.000Z",
+          "fin_utc": "2026-09-26T21:57:10.000Z"
+        }
+      ]
+    },
+    "Q05_cohortes": {
+      "sql": "SELECT build,width>=2560 AS haute_definition,bloom,count(*) AS rapports,sum(cause='overlay') AS overlay FROM events WHERE event='perf_spike' AND cause<>'inconsistent' GROUP BY build,haute_definition,bloom;",
+      "rows": [
+        {
+          "build": "beta-20260919-2",
+          "haute_definition": 0,
+          "bloom": 0,
+          "rapports": 165,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260919-2",
+          "haute_definition": 0,
+          "bloom": 1,
+          "rapports": 211,
+          "overlay": 2
+        },
+        {
+          "build": "beta-20260919-2",
+          "haute_definition": 1,
+          "bloom": 0,
+          "rapports": 85,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260919-2",
+          "haute_definition": 1,
+          "bloom": 1,
+          "rapports": 180,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260922-1",
+          "haute_definition": 0,
+          "bloom": 0,
+          "rapports": 176,
+          "overlay": 2
+        },
+        {
+          "build": "beta-20260922-1",
+          "haute_definition": 0,
+          "bloom": 1,
+          "rapports": 188,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260922-1",
+          "haute_definition": 1,
+          "bloom": 0,
+          "rapports": 124,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260922-1",
+          "haute_definition": 1,
+          "bloom": 1,
+          "rapports": 137,
+          "overlay": 0
+        },
+        {
+          "build": "beta-20260924-3",
+          "haute_definition": 0,
+          "bloom": 0,
+          "rapports": 92,
+          "overlay": 2
+        },
+        {
+          "build": "beta-20260924-3",
+          "haute_definition": 0,
+          "bloom": 1,
+          "rapports": 102,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260924-3",
+          "haute_definition": 1,
+          "bloom": 0,
+          "rapports": 82,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260924-3",
+          "haute_definition": 1,
+          "bloom": 1,
+          "rapports": 302,
+          "overlay": 186
+        },
+        {
+          "build": "beta-20260926-5",
+          "haute_definition": 0,
+          "bloom": 0,
+          "rapports": 29,
+          "overlay": 0
+        },
+        {
+          "build": "beta-20260926-5",
+          "haute_definition": 0,
+          "bloom": 1,
+          "rapports": 35,
+          "overlay": 1
+        },
+        {
+          "build": "beta-20260926-5",
+          "haute_definition": 1,
+          "bloom": 0,
+          "rapports": 15,
+          "overlay": 0
+        },
+        {
+          "build": "beta-20260926-5",
+          "haute_definition": 1,
+          "bloom": 1,
+          "rapports": 92,
+          "overlay": 58
+        },
+        {
+          "build": "beta-20260926-6",
+          "haute_definition": 0,
+          "bloom": 0,
+          "rapports": 13,
+          "overlay": 0
+        },
+        {
+          "build": "beta-20260926-6",
+          "haute_definition": 0,
+          "bloom": 1,
+          "rapports": 6,
+          "overlay": 0
+        },
+        {
+          "build": "beta-20260926-6",
+          "haute_definition": 1,
+          "bloom": 1,
+          "rapports": 6,
+          "overlay": 4
+        }
+      ]
+    },
+    "Q06_overlay_population": {
+      "sql": "SELECT browser,width,bloom,count(*) AS n,count(DISTINCT client_id) AS clients FROM events WHERE cause='overlay' GROUP BY browser,width,bloom ORDER BY n DESC;",
+      "rows": [
+        {
+          "browser": "Chrome",
+          "width": 2560,
+          "bloom": 1,
+          "n": 49,
+          "clients": 11
+        },
+        {
+          "browser": "Firefox",
+          "width": 3840,
+          "bloom": 1,
+          "n": 47,
+          "clients": 4
+        },
+        {
+          "browser": "Safari",
+          "width": 2560,
+          "bloom": 1,
+          "n": 36,
+          "clients": 4
+        },
+        {
+          "browser": "Chrome",
+          "width": 3840,
+          "bloom": 1,
+          "n": 22,
+          "clients": 4
+        },
+        {
+          "browser": "Firefox",
+          "width": 3440,
+          "bloom": 1,
+          "n": 18,
+          "clients": 3
+        },
+        {
+          "browser": "Edge",
+          "width": 3440,
+          "bloom": 1,
+          "n": 15,
+          "clients": 2
+        },
+        {
+          "browser": "Firefox",
+          "width": 2560,
+          "bloom": 1,
+          "n": 12,
+          "clients": 2
+        },
+        {
+          "browser": "Chrome",
+          "width": 3440,
+          "bloom": 1,
+          "n": 9,
+          "clients": 2
+        },
+        {
+          "browser": "Safari",
+          "width": 3440,
+          "bloom": 1,
+          "n": 9,
+          "clients": 2
+        },
+        {
+          "browser": "Safari",
+          "width": 3840,
+          "bloom": 1,
+          "n": 9,
+          "clients": 1
+        },
+        {
+          "browser": "Brave",
+          "width": 2560,
+          "bloom": 1,
+          "n": 8,
+          "clients": 2
+        },
+        {
+          "browser": "Edge",
+          "width": 3840,
+          "bloom": 1,
+          "n": 6,
+          "clients": 1
+        },
+        {
+          "browser": "Brave",
+          "width": 3840,
+          "bloom": 1,
+          "n": 5,
+          "clients": 1
+        },
+        {
+          "browser": "Brave",
+          "width": 3440,
+          "bloom": 1,
+          "n": 4,
+          "clients": 1
+        },
+        {
+          "browser": "Chrome",
+          "width": 1920,
+          "bloom": 1,
+          "n": 2,
+          "clients": 2
+        },
+        {
+          "browser": "Safari",
+          "width": 1920,
+          "bloom": 0,
+          "n": 2,
+          "clients": 2
+        },
+        {
+          "browser": "Safari",
+          "width": 1920,
+          "bloom": 1,
+          "n": 2,
+          "clients": 2
+        },
+        {
+          "browser": "Brave",
+          "width": 1920,
+          "bloom": 0,
+          "n": 1,
+          "clients": 1
+        },
+        {
+          "browser": "Chrome",
+          "width": 1440,
+          "bloom": 0,
+          "n": 1,
+          "clients": 1
+        },
+        {
+          "browser": "Chrome",
+          "width": 3440,
+          "bloom": 0,
+          "n": 1,
+          "clients": 1
+        },
+        {
+          "browser": "Firefox",
+          "width": 1366,
+          "bloom": 1,
+          "n": 1,
+          "clients": 1
+        },
+        {
+          "browser": "Firefox",
+          "width": 1440,
+          "bloom": 0,
+          "n": 1,
+          "clients": 1
+        },
+        {
+          "browser": "Firefox",
+          "width": 2560,
+          "bloom": 0,
+          "n": 1,
+          "clients": 1
+        },
+        {
+          "browser": "Safari",
+          "width": 2560,
+          "bloom": 0,
+          "n": 1,
+          "clients": 1
+        }
+      ]
+    },
+    "Q07_tick_horaire": {
+      "sql": "SELECT substr(local_time,1,13) AS heure_paris,count(*) AS n,round(avg(tick_gap_ms),1) AS tick_gap_moyen FROM events WHERE tick_gap_ms>=150 GROUP BY heure_paris;",
+      "rows": [
+        {
+          "heure_paris": "2026-09-21T02",
+          "n": 2,
+          "tick_gap_moyen": 746.6
+        },
+        {
+          "heure_paris": "2026-09-21T03",
+          "n": 10,
+          "tick_gap_moyen": 746.4
+        },
+        {
+          "heure_paris": "2026-09-23T03",
+          "n": 13,
+          "tick_gap_moyen": 619.5
+        }
+      ]
+    },
+    "Q08_farming": {
+      "sql": "SELECT substr(local_time,1,10) AS jour,count(*) AS parties,sum(short_win) AS victoires_courtes,sum(quarantined) AS quarantaines,round(min(duration_s),2) AS min_s,round(max(duration_s),2) AS max_s FROM events WHERE event='game_completed' GROUP BY jour;",
+      "rows": [
+        {
+          "jour": "2026-09-20",
+          "parties": 107,
+          "victoires_courtes": 0,
+          "quarantaines": 0,
+          "min_s": 301.54,
+          "max_s": 835.65
+        },
+        {
+          "jour": "2026-09-21",
+          "parties": 96,
+          "victoires_courtes": 0,
+          "quarantaines": 0,
+          "min_s": 170.81,
+          "max_s": 833.34
+        },
+        {
+          "jour": "2026-09-22",
+          "parties": 91,
+          "victoires_courtes": 0,
+          "quarantaines": 0,
+          "min_s": 306.67,
+          "max_s": 832.44
+        },
+        {
+          "jour": "2026-09-23",
+          "parties": 149,
+          "victoires_courtes": 45,
+          "quarantaines": 12,
+          "min_s": 55.02,
+          "max_s": 830.37
+        },
+        {
+          "jour": "2026-09-24",
+          "parties": 105,
+          "victoires_courtes": 0,
+          "quarantaines": 0,
+          "min_s": 175.38,
+          "max_s": 834.29
+        },
+        {
+          "jour": "2026-09-25",
+          "parties": 133,
+          "victoires_courtes": 38,
+          "quarantaines": 5,
+          "min_s": 54.35,
+          "max_s": 838.76
+        },
+        {
+          "jour": "2026-09-26",
+          "parties": 97,
+          "victoires_courtes": 0,
+          "quarantaines": 0,
+          "min_s": 302.7,
+          "max_s": 834.25
+        },
+        {
+          "jour": "2026-09-27",
+          "parties": 1,
+          "victoires_courtes": 0,
+          "quarantaines": 0,
+          "min_s": 442.92,
+          "max_s": 442.92
+        }
+      ]
+    },
+    "Q09_farming_intervalles": {
+      "sql": "SELECT ts,server_id,round(duration_s,2) AS secondes,quarantined,round((julianday(ts)-julianday(lag(ts) OVER(ORDER BY ts)))*86400,1) AS intervalle_s FROM events WHERE short_win=1 ORDER BY ts;",
+      "rows": [
+        {
+          "ts": "2026-09-22T23:14:22.000Z",
+          "server_id": "Km7hFlTAH",
+          "secondes": 65.89,
+          "quarantined": 1,
+          "intervalle_s": null
+        },
+        {
+          "ts": "2026-09-22T23:18:45.000Z",
+          "server_id": "G59Ei1oUz",
+          "secondes": 74.43,
+          "quarantined": 0,
+          "intervalle_s": 263
+        },
+        {
+          "ts": "2026-09-22T23:22:28.000Z",
+          "server_id": "yjOlX7qFY",
+          "secondes": 65.04,
+          "quarantined": 0,
+          "intervalle_s": 223
+        },
+        {
+          "ts": "2026-09-22T23:25:01.000Z",
+          "server_id": "l5m7WN5BW",
+          "secondes": 59.92,
+          "quarantined": 0,
+          "intervalle_s": 153
+        },
+        {
+          "ts": "2026-09-22T23:28:13.000Z",
+          "server_id": "pqrsHAZ3v",
+          "secondes": 68.89,
+          "quarantined": 1,
+          "intervalle_s": 192
+        },
+        {
+          "ts": "2026-09-22T23:32:11.000Z",
+          "server_id": "sh7irSbmh",
+          "secondes": 70.66,
+          "quarantined": 0,
+          "intervalle_s": 238
+        },
+        {
+          "ts": "2026-09-22T23:34:44.000Z",
+          "server_id": "i4p1eh3q2",
+          "secondes": 65.14,
+          "quarantined": 0,
+          "intervalle_s": 153
+        },
+        {
+          "ts": "2026-09-22T23:38:10.000Z",
+          "server_id": "93N89GgyS",
+          "secondes": 55.06,
+          "quarantined": 0,
+          "intervalle_s": 206
+        },
+        {
+          "ts": "2026-09-22T23:42:34.000Z",
+          "server_id": "PEUIDcctj",
+          "secondes": 73.52,
+          "quarantined": 1,
+          "intervalle_s": 264
+        },
+        {
+          "ts": "2026-09-22T23:46:18.000Z",
+          "server_id": "9WizESOP5",
+          "secondes": 68.56,
+          "quarantined": 1,
+          "intervalle_s": 224
+        },
+        {
+          "ts": "2026-09-22T23:49:15.000Z",
+          "server_id": "kAVkX9p0r",
+          "secondes": 65.36,
+          "quarantined": 0,
+          "intervalle_s": 177
+        },
+        {
+          "ts": "2026-09-22T23:53:15.000Z",
+          "server_id": "CxsNffV5M",
+          "secondes": 66.98,
+          "quarantined": 0,
+          "intervalle_s": 240
+        },
+        {
+          "ts": "2026-09-22T23:57:17.000Z",
+          "server_id": "EIjUGUDAu",
+          "secondes": 68.54,
+          "quarantined": 0,
+          "intervalle_s": 242
+        },
+        {
+          "ts": "2026-09-23T00:00:38.000Z",
+          "server_id": "lZZQcpC5b",
+          "secondes": 74.27,
+          "quarantined": 1,
+          "intervalle_s": 201
+        },
+        {
+          "ts": "2026-09-23T00:03:31.000Z",
+          "server_id": "WlWaXZIpa",
+          "secondes": 70.05,
+          "quarantined": 1,
+          "intervalle_s": 173
+        },
+        {
+          "ts": "2026-09-23T00:06:09.000Z",
+          "server_id": "wCe1ga5yi",
+          "secondes": 61.24,
+          "quarantined": 0,
+          "intervalle_s": 158
+        },
+        {
+          "ts": "2026-09-23T00:10:04.000Z",
+          "server_id": "39WvM0QsZ",
+          "secondes": 67.71,
+          "quarantined": 0,
+          "intervalle_s": 235
+        },
+        {
+          "ts": "2026-09-23T00:14:38.000Z",
+          "server_id": "RDFXvvThL",
+          "secondes": 67.91,
+          "quarantined": 0,
+          "intervalle_s": 274
+        },
+        {
+          "ts": "2026-09-23T00:17:41.000Z",
+          "server_id": "W9QUM1CPC",
+          "secondes": 59.73,
+          "quarantined": 0,
+          "intervalle_s": 183
+        },
+        {
+          "ts": "2026-09-23T00:20:21.000Z",
+          "server_id": "E8g9wcv1O",
+          "secondes": 57.78,
+          "quarantined": 0,
+          "intervalle_s": 160
+        },
+        {
+          "ts": "2026-09-23T00:23:19.000Z",
+          "server_id": "H83JKpbvn",
+          "secondes": 55.02,
+          "quarantined": 0,
+          "intervalle_s": 178
+        },
+        {
+          "ts": "2026-09-23T00:26:52.000Z",
+          "server_id": "NLO4tWUJR",
+          "secondes": 64.31,
+          "quarantined": 0,
+          "intervalle_s": 213
+        },
+        {
+          "ts": "2026-09-23T00:30:28.000Z",
+          "server_id": "aMimB4kQx",
+          "secondes": 65.11,
+          "quarantined": 0,
+          "intervalle_s": 216
+        },
+        {
+          "ts": "2026-09-23T00:33:36.000Z",
+          "server_id": "v9pQIHlhR",
+          "secondes": 60.33,
+          "quarantined": 0,
+          "intervalle_s": 188
+        },
+        {
+          "ts": "2026-09-23T00:37:31.000Z",
+          "server_id": "ZRPKj6kGQ",
+          "secondes": 64.02,
+          "quarantined": 1,
+          "intervalle_s": 235
+        },
+        {
+          "ts": "2026-09-23T00:40:37.000Z",
+          "server_id": "9EtPXs3dh",
+          "secondes": 58.87,
+          "quarantined": 0,
+          "intervalle_s": 186
+        },
+        {
+          "ts": "2026-09-23T00:44:33.000Z",
+          "server_id": "PpPKEZr3A",
+          "secondes": 74.06,
+          "quarantined": 0,
+          "intervalle_s": 236
+        },
+        {
+          "ts": "2026-09-23T00:47:54.000Z",
+          "server_id": "f3qyy1XeO",
+          "secondes": 55.09,
+          "quarantined": 1,
+          "intervalle_s": 201
+        },
+        {
+          "ts": "2026-09-23T00:50:33.000Z",
+          "server_id": "RjON0kXY7",
+          "secondes": 61.8,
+          "quarantined": 0,
+          "intervalle_s": 159
+        },
+        {
+          "ts": "2026-09-23T00:54:31.000Z",
+          "server_id": "UqhgHOUvC",
+          "secondes": 65.5,
+          "quarantined": 0,
+          "intervalle_s": 238
+        },
+        {
+          "ts": "2026-09-23T00:58:41.000Z",
+          "server_id": "gIyqBZ5CL",
+          "secondes": 66.49,
+          "quarantined": 0,
+          "intervalle_s": 250
+        },
+        {
+          "ts": "2026-09-23T01:01:43.000Z",
+          "server_id": "2zNIUwQl2",
+          "secondes": 56.48,
+          "quarantined": 0,
+          "intervalle_s": 182
+        },
+        {
+          "ts": "2026-09-23T01:05:13.000Z",
+          "server_id": "4LdYHcfqK",
+          "secondes": 65.36,
+          "quarantined": 0,
+          "intervalle_s": 210
+        },
+        {
+          "ts": "2026-09-23T01:08:10.000Z",
+          "server_id": "ZWO4Ltvud",
+          "secondes": 62.79,
+          "quarantined": 1,
+          "intervalle_s": 177
+        },
+        {
+          "ts": "2026-09-23T01:12:05.000Z",
+          "server_id": "b50rYw7yk",
+          "secondes": 68.35,
+          "quarantined": 0,
+          "intervalle_s": 235
+        },
+        {
+          "ts": "2026-09-23T01:15:36.000Z",
+          "server_id": "0Zfp8XaEj",
+          "secondes": 57.86,
+          "quarantined": 0,
+          "intervalle_s": 211
+        },
+        {
+          "ts": "2026-09-23T01:19:01.000Z",
+          "server_id": "5busgBOou",
+          "secondes": 68.27,
+          "quarantined": 0,
+          "intervalle_s": 205
+        },
+        {
+          "ts": "2026-09-23T01:22:14.000Z",
+          "server_id": "7h9FJxhlk",
+          "secondes": 67.53,
+          "quarantined": 0,
+          "intervalle_s": 193
+        },
+        {
+          "ts": "2026-09-23T01:26:41.000Z",
+          "server_id": "xEqvBnmrH",
+          "secondes": 73.41,
+          "quarantined": 0,
+          "intervalle_s": 267
+        },
+        {
+          "ts": "2026-09-23T01:28:57.000Z",
+          "server_id": "6ssfAsv3O",
+          "secondes": 55.33,
+          "quarantined": 0,
+          "intervalle_s": 136
+        },
+        {
+          "ts": "2026-09-23T01:32:45.000Z",
+          "server_id": "DGJzrqjKx",
+          "secondes": 61.54,
+          "quarantined": 1,
+          "intervalle_s": 228
+        },
+        {
+          "ts": "2026-09-23T01:35:32.000Z",
+          "server_id": "8ik0GEJr2",
+          "secondes": 67.99,
+          "quarantined": 1,
+          "intervalle_s": 167
+        },
+        {
+          "ts": "2026-09-23T01:38:14.000Z",
+          "server_id": "6Q6u37GHA",
+          "secondes": 67.2,
+          "quarantined": 0,
+          "intervalle_s": 162
+        },
+        {
+          "ts": "2026-09-23T01:42:36.000Z",
+          "server_id": "u3UjOUZ4R",
+          "secondes": 57.1,
+          "quarantined": 1,
+          "intervalle_s": 262
+        },
+        {
+          "ts": "2026-09-23T01:46:35.000Z",
+          "server_id": "8PHdyBcjZ",
+          "secondes": 68.88,
+          "quarantined": 0,
+          "intervalle_s": 239
+        },
+        {
+          "ts": "2026-09-24T22:44:29.000Z",
+          "server_id": "tpbBHbjFm",
+          "secondes": 66.94,
+          "quarantined": 1,
+          "intervalle_s": 161874
+        },
+        {
+          "ts": "2026-09-24T22:47:29.000Z",
+          "server_id": "CIxSlFg2M",
+          "secondes": 63.98,
+          "quarantined": 0,
+          "intervalle_s": 180
+        },
+        {
+          "ts": "2026-09-24T22:50:39.000Z",
+          "server_id": "1IAXXL5il",
+          "secondes": 57.5,
+          "quarantined": 0,
+          "intervalle_s": 190
+        },
+        {
+          "ts": "2026-09-24T22:53:15.000Z",
+          "server_id": "saLryBJBF",
+          "secondes": 63.74,
+          "quarantined": 0,
+          "intervalle_s": 156
+        },
+        {
+          "ts": "2026-09-24T22:56:12.000Z",
+          "server_id": "I0mQm8ZUL",
+          "secondes": 56.45,
+          "quarantined": 0,
+          "intervalle_s": 177
+        },
+        {
+          "ts": "2026-09-24T22:59:32.000Z",
+          "server_id": "e10QH7rKY",
+          "secondes": 74.25,
+          "quarantined": 0,
+          "intervalle_s": 200
+        },
+        {
+          "ts": "2026-09-24T23:01:32.000Z",
+          "server_id": "ju7hPnhbs",
+          "secondes": 54.61,
+          "quarantined": 0,
+          "intervalle_s": 120
+        },
+        {
+          "ts": "2026-09-24T23:04:17.000Z",
+          "server_id": "AhpKHtbLW",
+          "secondes": 73.17,
+          "quarantined": 0,
+          "intervalle_s": 165
+        },
+        {
+          "ts": "2026-09-24T23:07:34.000Z",
+          "server_id": "HKDKY5dz0",
+          "secondes": 67.65,
+          "quarantined": 0,
+          "intervalle_s": 197
+        },
+        {
+          "ts": "2026-09-24T23:10:49.000Z",
+          "server_id": "sdnWJWNDQ",
+          "secondes": 72.98,
+          "quarantined": 0,
+          "intervalle_s": 195
+        },
+        {
+          "ts": "2026-09-24T23:13:16.000Z",
+          "server_id": "3wT64DOD6",
+          "secondes": 71.66,
+          "quarantined": 1,
+          "intervalle_s": 147
+        },
+        {
+          "ts": "2026-09-24T23:15:08.000Z",
+          "server_id": "Mbtd26Trz",
+          "secondes": 57.57,
+          "quarantined": 1,
+          "intervalle_s": 112
+        },
+        {
+          "ts": "2026-09-24T23:17:42.000Z",
+          "server_id": "tWiAr9RIG",
+          "secondes": 55.9,
+          "quarantined": 0,
+          "intervalle_s": 154
+        },
+        {
+          "ts": "2026-09-24T23:21:19.000Z",
+          "server_id": "lQdSyaBTt",
+          "secondes": 65.99,
+          "quarantined": 0,
+          "intervalle_s": 217
+        },
+        {
+          "ts": "2026-09-24T23:24:21.000Z",
+          "server_id": "h7EM7SGPZ",
+          "secondes": 67.93,
+          "quarantined": 1,
+          "intervalle_s": 182
+        },
+        {
+          "ts": "2026-09-24T23:27:20.000Z",
+          "server_id": "CKFxjNWIZ",
+          "secondes": 69.13,
+          "quarantined": 0,
+          "intervalle_s": 179
+        },
+        {
+          "ts": "2026-09-24T23:30:46.000Z",
+          "server_id": "avfEZkW7q",
+          "secondes": 69.31,
+          "quarantined": 0,
+          "intervalle_s": 206
+        },
+        {
+          "ts": "2026-09-24T23:33:25.000Z",
+          "server_id": "I5JK95Ce6",
+          "secondes": 72.15,
+          "quarantined": 0,
+          "intervalle_s": 159
+        },
+        {
+          "ts": "2026-09-24T23:35:52.000Z",
+          "server_id": "j0lssDxpD",
+          "secondes": 70.18,
+          "quarantined": 1,
+          "intervalle_s": 147
+        },
+        {
+          "ts": "2026-09-24T23:38:44.000Z",
+          "server_id": "DVTEnREJV",
+          "secondes": 61.39,
+          "quarantined": 0,
+          "intervalle_s": 172
+        },
+        {
+          "ts": "2026-09-24T23:41:05.000Z",
+          "server_id": "6grURXPwG",
+          "secondes": 62.08,
+          "quarantined": 0,
+          "intervalle_s": 141
+        },
+        {
+          "ts": "2026-09-24T23:44:57.000Z",
+          "server_id": "q57O0tJKa",
+          "secondes": 71.89,
+          "quarantined": 0,
+          "intervalle_s": 232
+        },
+        {
+          "ts": "2026-09-24T23:48:08.000Z",
+          "server_id": "wZfgMQLb5",
+          "secondes": 70.94,
+          "quarantined": 0,
+          "intervalle_s": 191
+        },
+        {
+          "ts": "2026-09-24T23:50:30.000Z",
+          "server_id": "L2ZyrYova",
+          "secondes": 62.8,
+          "quarantined": 0,
+          "intervalle_s": 142
+        },
+        {
+          "ts": "2026-09-24T23:53:53.000Z",
+          "server_id": "cpUI1yBAV",
+          "secondes": 68.7,
+          "quarantined": 0,
+          "intervalle_s": 203
+        },
+        {
+          "ts": "2026-09-24T23:57:26.000Z",
+          "server_id": "0BHoZ0CjW",
+          "secondes": 60.11,
+          "quarantined": 0,
+          "intervalle_s": 213
+        },
+        {
+          "ts": "2026-09-25T00:00:54.000Z",
+          "server_id": "1c0dnTBEx",
+          "secondes": 59.97,
+          "quarantined": 0,
+          "intervalle_s": 208
+        },
+        {
+          "ts": "2026-09-25T00:03:11.000Z",
+          "server_id": "psBA61kNW",
+          "secondes": 56.67,
+          "quarantined": 0,
+          "intervalle_s": 137
+        },
+        {
+          "ts": "2026-09-25T00:06:19.000Z",
+          "server_id": "jbxltBOSE",
+          "secondes": 65.34,
+          "quarantined": 0,
+          "intervalle_s": 188
+        },
+        {
+          "ts": "2026-09-25T00:08:40.000Z",
+          "server_id": "XJD86sQCb",
+          "secondes": 56.28,
+          "quarantined": 0,
+          "intervalle_s": 141
+        },
+        {
+          "ts": "2026-09-25T00:11:47.000Z",
+          "server_id": "0cnbRiPco",
+          "secondes": 56.11,
+          "quarantined": 0,
+          "intervalle_s": 187
+        },
+        {
+          "ts": "2026-09-25T00:14:39.000Z",
+          "server_id": "CoY4sV1Jg",
+          "secondes": 57.1,
+          "quarantined": 0,
+          "intervalle_s": 172
+        },
+        {
+          "ts": "2026-09-25T00:17:09.000Z",
+          "server_id": "Aokre620u",
+          "secondes": 54.35,
+          "quarantined": 0,
+          "intervalle_s": 150
+        },
+        {
+          "ts": "2026-09-25T00:20:55.000Z",
+          "server_id": "jzgMPIeyj",
+          "secondes": 62.17,
+          "quarantined": 0,
+          "intervalle_s": 226
+        },
+        {
+          "ts": "2026-09-25T00:23:15.000Z",
+          "server_id": "tkSpyQDJ3",
+          "secondes": 60.54,
+          "quarantined": 0,
+          "intervalle_s": 140
+        },
+        {
+          "ts": "2026-09-25T00:27:10.000Z",
+          "server_id": "3yXB72275",
+          "secondes": 70.09,
+          "quarantined": 0,
+          "intervalle_s": 235
+        },
+        {
+          "ts": "2026-09-25T00:29:27.000Z",
+          "server_id": "tSZ8ui302",
+          "secondes": 62.91,
+          "quarantined": 0,
+          "intervalle_s": 137
+        },
+        {
+          "ts": "2026-09-25T00:32:54.000Z",
+          "server_id": "Hh7ev6HnM",
+          "secondes": 62.47,
+          "quarantined": 0,
+          "intervalle_s": 207
+        }
+      ]
+    },
+    "Q10_incoherences": {
+      "sql": "SELECT client_id,count(*) AS n,min(ts) AS debut_utc,max(ts) AS fin_utc,min(frame_ms) AS frame_min,max(frame_ms) AS frame_max,min(total_ms) AS total_min,max(total_ms) AS total_max FROM events WHERE cause='inconsistent' GROUP BY client_id;",
+      "rows": [
+        {
+          "client_id": "5e1f0c7a",
+          "n": 70,
+          "debut_utc": "2026-09-24T07:35:45.000Z",
+          "fin_utc": "2026-09-26T20:37:37.000Z",
+          "frame_min": 32,
+          "frame_max": 119,
+          "total_min": 118,
+          "total_max": 809
+        }
+      ]
+    },
+    "Q11_trous": {
+      "sql": "WITH t AS (SELECT ts,lag(ts) OVER(ORDER BY ts) AS precedent FROM events) SELECT precedent,ts,round((julianday(ts)-julianday(precedent))*86400,1) AS secondes FROM t WHERE (julianday(ts)-julianday(precedent))*86400>1800 ORDER BY secondes DESC;",
+      "rows": [
+        {
+          "precedent": "2026-09-22T11:59:23.000Z",
+          "ts": "2026-09-22T14:14:34.000Z",
+          "secondes": 8111
+        },
+        {
+          "precedent": "2026-09-21T01:27:10.000Z",
+          "ts": "2026-09-21T02:51:25.000Z",
+          "secondes": 5055
+        },
+        {
+          "precedent": "2026-09-21T03:10:53.000Z",
+          "ts": "2026-09-21T04:29:45.000Z",
+          "secondes": 4732
+        },
+        {
+          "precedent": "2026-09-23T03:19:49.000Z",
+          "ts": "2026-09-23T04:36:38.000Z",
+          "secondes": 4609
+        },
+        {
+          "precedent": "2026-09-24T00:27:39.000Z",
+          "ts": "2026-09-24T01:34:56.000Z",
+          "secondes": 4037
+        },
+        {
+          "precedent": "2026-09-25T23:34:33.000Z",
+          "ts": "2026-09-26T00:41:29.000Z",
+          "secondes": 4016
+        },
+        {
+          "precedent": "2026-09-22T00:42:37.000Z",
+          "ts": "2026-09-22T01:46:08.000Z",
+          "secondes": 3811
+        },
+        {
+          "precedent": "2026-09-20T23:35:06.000Z",
+          "ts": "2026-09-21T00:36:27.000Z",
+          "secondes": 3681
+        },
+        {
+          "precedent": "2026-09-20T02:40:58.000Z",
+          "ts": "2026-09-20T03:41:57.000Z",
+          "secondes": 3659
+        },
+        {
+          "precedent": "2026-09-22T03:23:12.000Z",
+          "ts": "2026-09-22T04:23:18.000Z",
+          "secondes": 3606
+        },
+        {
+          "precedent": "2026-09-23T22:19:22.000Z",
+          "ts": "2026-09-23T23:18:07.000Z",
+          "secondes": 3525
+        },
+        {
+          "precedent": "2026-09-22T06:32:45.000Z",
+          "ts": "2026-09-22T07:27:44.000Z",
+          "secondes": 3299
+        },
+        {
+          "precedent": "2026-09-20T03:46:59.000Z",
+          "ts": "2026-09-20T04:41:14.000Z",
+          "secondes": 3255
+        },
+        {
+          "precedent": "2026-09-20T01:41:46.000Z",
+          "ts": "2026-09-20T02:34:53.000Z",
+          "secondes": 3187
+        },
+        {
+          "precedent": "2026-09-24T03:21:49.000Z",
+          "ts": "2026-09-24T04:14:36.000Z",
+          "secondes": 3167
+        },
+        {
+          "precedent": "2026-09-21T23:36:05.000Z",
+          "ts": "2026-09-22T00:28:26.000Z",
+          "secondes": 3141
+        },
+        {
+          "precedent": "2026-09-25T02:59:11.000Z",
+          "ts": "2026-09-25T03:50:44.000Z",
+          "secondes": 3093
+        },
+        {
+          "precedent": "2026-09-21T20:40:54.000Z",
+          "ts": "2026-09-21T21:31:30.000Z",
+          "secondes": 3036
+        },
+        {
+          "precedent": "2026-09-26T00:46:46.000Z",
+          "ts": "2026-09-26T01:37:16.000Z",
+          "secondes": 3030
+        },
+        {
+          "precedent": "2026-09-25T01:47:56.000Z",
+          "ts": "2026-09-25T02:35:17.000Z",
+          "secondes": 2841
+        },
+        {
+          "precedent": "2026-09-20T15:51:14.000Z",
+          "ts": "2026-09-20T16:37:40.000Z",
+          "secondes": 2786
+        },
+        {
+          "precedent": "2026-09-22T01:56:44.000Z",
+          "ts": "2026-09-22T02:41:59.000Z",
+          "secondes": 2715
+        },
+        {
+          "precedent": "2026-09-22T04:27:59.000Z",
+          "ts": "2026-09-22T05:13:11.000Z",
+          "secondes": 2712
+        },
+        {
+          "precedent": "2026-09-24T02:27:36.000Z",
+          "ts": "2026-09-24T03:12:41.000Z",
+          "secondes": 2705
+        },
+        {
+          "precedent": "2026-09-26T02:46:45.000Z",
+          "ts": "2026-09-26T03:29:28.000Z",
+          "secondes": 2563
+        },
+        {
+          "precedent": "2026-09-22T07:57:59.000Z",
+          "ts": "2026-09-22T08:40:15.000Z",
+          "secondes": 2536
+        },
+        {
+          "precedent": "2026-09-26T04:00:23.000Z",
+          "ts": "2026-09-26T04:41:59.000Z",
+          "secondes": 2496
+        },
+        {
+          "precedent": "2026-09-23T23:40:51.000Z",
+          "ts": "2026-09-24T00:22:04.000Z",
+          "secondes": 2473
+        },
+        {
+          "precedent": "2026-09-24T01:46:17.000Z",
+          "ts": "2026-09-24T02:26:52.000Z",
+          "secondes": 2435
+        },
+        {
+          "precedent": "2026-09-25T07:48:57.000Z",
+          "ts": "2026-09-25T08:28:39.000Z",
+          "secondes": 2382
+        },
+        {
+          "precedent": "2026-09-19T23:16:57.000Z",
+          "ts": "2026-09-19T23:55:47.000Z",
+          "secondes": 2330
+        },
+        {
+          "precedent": "2026-09-26T08:57:44.000Z",
+          "ts": "2026-09-26T09:36:22.000Z",
+          "secondes": 2318
+        },
+        {
+          "precedent": "2026-09-23T05:46:44.000Z",
+          "ts": "2026-09-23T06:23:54.000Z",
+          "secondes": 2230
+        },
+        {
+          "precedent": "2026-09-22T05:17:15.000Z",
+          "ts": "2026-09-22T05:54:15.000Z",
+          "secondes": 2220
+        },
+        {
+          "precedent": "2026-09-24T05:33:19.000Z",
+          "ts": "2026-09-24T06:10:06.000Z",
+          "secondes": 2207
+        },
+        {
+          "precedent": "2026-09-23T01:46:35.000Z",
+          "ts": "2026-09-23T02:23:09.000Z",
+          "secondes": 2194
+        },
+        {
+          "precedent": "2026-09-25T04:32:31.000Z",
+          "ts": "2026-09-25T05:08:58.000Z",
+          "secondes": 2187
+        },
+        {
+          "precedent": "2026-09-20T08:34:06.000Z",
+          "ts": "2026-09-20T09:10:02.000Z",
+          "secondes": 2156
+        },
+        {
+          "precedent": "2026-09-23T21:18:49.000Z",
+          "ts": "2026-09-23T21:54:28.000Z",
+          "secondes": 2139
+        },
+        {
+          "precedent": "2026-09-25T13:45:03.000Z",
+          "ts": "2026-09-25T14:20:06.000Z",
+          "secondes": 2103
+        },
+        {
+          "precedent": "2026-09-21T07:07:57.000Z",
+          "ts": "2026-09-21T07:42:59.000Z",
+          "secondes": 2102
+        },
+        {
+          "precedent": "2026-09-25T01:04:34.000Z",
+          "ts": "2026-09-25T01:39:35.000Z",
+          "secondes": 2101
+        },
+        {
+          "precedent": "2026-09-21T06:25:19.000Z",
+          "ts": "2026-09-21T06:59:39.000Z",
+          "secondes": 2060
+        },
+        {
+          "precedent": "2026-09-22T10:57:50.000Z",
+          "ts": "2026-09-22T11:31:41.000Z",
+          "secondes": 2031
+        },
+        {
+          "precedent": "2026-09-25T08:52:15.000Z",
+          "ts": "2026-09-25T09:26:06.000Z",
+          "secondes": 2031
+        },
+        {
+          "precedent": "2026-09-21T04:34:53.000Z",
+          "ts": "2026-09-21T05:08:39.000Z",
+          "secondes": 2026
+        },
+        {
+          "precedent": "2026-09-20T00:58:05.000Z",
+          "ts": "2026-09-20T01:31:40.000Z",
+          "secondes": 2015
+        },
+        {
+          "precedent": "2026-09-20T05:38:02.000Z",
+          "ts": "2026-09-20T06:11:14.000Z",
+          "secondes": 1992
+        },
+        {
+          "precedent": "2026-09-23T02:36:09.000Z",
+          "ts": "2026-09-23T03:08:46.000Z",
+          "secondes": 1957
+        },
+        {
+          "precedent": "2026-09-26T21:07:20.000Z",
+          "ts": "2026-09-26T21:39:30.000Z",
+          "secondes": 1930
+        },
+        {
+          "precedent": "2026-09-21T05:39:36.000Z",
+          "ts": "2026-09-21T06:11:41.000Z",
+          "secondes": 1925
+        },
+        {
+          "precedent": "2026-09-21T09:31:34.000Z",
+          "ts": "2026-09-21T10:03:09.000Z",
+          "secondes": 1895
+        },
+        {
+          "precedent": "2026-09-23T04:45:15.000Z",
+          "ts": "2026-09-23T05:16:44.000Z",
+          "secondes": 1889
+        },
+        {
+          "precedent": "2026-09-21T14:16:39.000Z",
+          "ts": "2026-09-21T14:48:00.000Z",
+          "secondes": 1881
+        },
+        {
+          "precedent": "2026-09-26T07:29:16.000Z",
+          "ts": "2026-09-26T08:00:31.000Z",
+          "secondes": 1875
+        },
+        {
+          "precedent": "2026-09-20T09:56:02.000Z",
+          "ts": "2026-09-20T10:27:07.000Z",
+          "secondes": 1865
+        },
+        {
+          "precedent": "2026-09-23T07:27:45.000Z",
+          "ts": "2026-09-23T07:58:50.000Z",
+          "secondes": 1865
+        },
+        {
+          "precedent": "2026-09-26T01:42:34.000Z",
+          "ts": "2026-09-26T02:13:37.000Z",
+          "secondes": 1863
+        },
+        {
+          "precedent": "2026-09-21T13:13:57.000Z",
+          "ts": "2026-09-21T13:44:54.000Z",
+          "secondes": 1857
+        },
+        {
+          "precedent": "2026-09-20T12:17:08.000Z",
+          "ts": "2026-09-20T12:47:34.000Z",
+          "secondes": 1826
+        }
+      ]
+    },
+    "Q12_schemas": {
+      "sql": "SELECT version,count(*) AS n,sum(rtt_ms IS NULL) AS rtt_absent,sum(json_extract(raw,'$.report.graphics.gpuRenderMs') IS NULL) AS gpu_absent FROM events WHERE event='perf_spike' GROUP BY version;",
+      "rows": [
+        {
+          "version": 1,
+          "n": 2085,
+          "rtt_absent": 0,
+          "gpu_absent": 879
+        },
+        {
+          "version": 2,
+          "n": 25,
+          "rtt_absent": 0,
+          "gpu_absent": 3
+        }
+      ]
+    },
+    "Q13_temps_incoherents": {
+      "sql": "SELECT event,sum(duration_s<0) AS avant_creation,sum(duration_s>86400) AS plus_un_jour,sum(json_extract(raw,'$.server.players')+json_extract(raw,'$.server.bots')>json_extract(raw,'$.server.capacity')) AS capacite_depassee FROM events GROUP BY event;",
+      "rows": [
+        {
+          "event": "game_completed",
+          "avant_creation": 0,
+          "plus_un_jour": 0,
+          "capacite_depassee": 0
+        },
+        {
+          "event": "perf_spike",
+          "avant_creation": 0,
+          "plus_un_jour": 0,
+          "capacite_depassee": 0
+        }
+      ]
+    },
+    "Q14_clients_sequences": {
+      "sql": "WITH s AS (SELECT client_id,cast(substr(report_id,12) AS INTEGER) AS seq FROM events WHERE event='perf_spike'), d AS(SELECT DISTINCT client_id,seq FROM s), g AS(SELECT client_id,seq-lag(seq) OVER(PARTITION BY client_id ORDER BY seq)-1 AS manque FROM d) SELECT client_id,sum(manque) AS numeros_non_observes FROM g WHERE manque>0 GROUP BY client_id ORDER BY numeros_non_observes DESC;",
+      "rows": [
+        {
+          "client_id": "5e1f0c7a",
+          "numeros_non_observes": 9025
+        },
+        {
+          "client_id": "d8472619",
+          "numeros_non_observes": 5
+        },
+        {
+          "client_id": "ecbdd0f3",
+          "numeros_non_observes": 3
+        },
+        {
+          "client_id": "a1ba74b0",
+          "numeros_non_observes": 2
+        },
+        {
+          "client_id": "be4dbb03",
+          "numeros_non_observes": 1
+        },
+        {
+          "client_id": "a222bb36",
+          "numeros_non_observes": 1
+        },
+        {
+          "client_id": "270836c2",
+          "numeros_non_observes": 1
+        }
+      ]
+    },
+    "Q15_parties_sans_fin": {
+      "sql": "SELECT count(DISTINCT p.server_id) AS parties_sans_fin FROM events p WHERE p.event='perf_spike' AND NOT EXISTS(SELECT 1 FROM events g WHERE g.event='game_completed' AND g.server_id=p.server_id);",
+      "rows": [
+        {
+          "parties_sans_fin": 72
+        }
+      ]
+    },
+    "Q16_avant_apres_cohorte": {
+      "sql": "SELECT CASE WHEN ts<'2026-09-24T16:00:00.000Z' THEN 'avant_jeudi_18h_Paris' ELSE 'apres' END AS periode,count(*) AS rapports,sum(cause='overlay') AS overlay,count(DISTINCT client_id) AS clients FROM events WHERE event='perf_spike' AND width>=2560 AND bloom=1 AND cause<>'inconsistent' GROUP BY periode;",
+      "rows": [
+        {
+          "periode": "apres",
+          "rapports": 419,
+          "overlay": 248,
+          "clients": 45
+        },
+        {
+          "periode": "avant_jeudi_18h_Paris",
+          "rapports": 298,
+          "overlay": 1,
+          "clients": 54
+        }
+      ]
+    },
+    "Q17_premiers_overlay": {
+      "sql": "SELECT ts,local_time,build,client_id,frame_ms,overlay_ms,rtt_ms,tick_gap_ms FROM events WHERE cause='overlay' ORDER BY ts LIMIT 10;",
+      "rows": [
+        {
+          "ts": "2026-09-20T16:51:52.000Z",
+          "local_time": "2026-09-20T18:51:52.000+02:00",
+          "build": "beta-20260919-2",
+          "client_id": "6d9ac44a",
+          "frame_ms": 409,
+          "overlay_ms": 369.7,
+          "rtt_ms": 40.4,
+          "tick_gap_ms": 50.379942734469665
+        },
+        {
+          "ts": "2026-09-20T21:34:37.000Z",
+          "local_time": "2026-09-20T23:34:37.000+02:00",
+          "build": "beta-20260919-2",
+          "client_id": "6f3dccf6",
+          "frame_ms": 501,
+          "overlay_ms": 468.2,
+          "rtt_ms": 31.1,
+          "tick_gap_ms": 50.32978114164435
+        },
+        {
+          "ts": "2026-09-21T21:50:19.000Z",
+          "local_time": "2026-09-21T23:50:19.000+02:00",
+          "build": "beta-20260919-2",
+          "client_id": "32855a43",
+          "frame_ms": 366,
+          "overlay_ms": 330.8,
+          "rtt_ms": 54.1,
+          "tick_gap_ms": 50.42267268688884
+        },
+        {
+          "ts": "2026-09-21T22:04:30.000Z",
+          "local_time": "2026-09-22T00:04:30.000+02:00",
+          "build": "beta-20260919-2",
+          "client_id": "dfeb807d",
+          "frame_ms": 478,
+          "overlay_ms": 389.7,
+          "rtt_ms": 46.2,
+          "tick_gap_ms": 52.29972537632566
+        },
+        {
+          "ts": "2026-09-22T03:15:36.000Z",
+          "local_time": "2026-09-22T05:15:36.000+02:00",
+          "build": "beta-20260919-2",
+          "client_id": "fb8802fd",
+          "frame_ms": 331,
+          "overlay_ms": 311.1,
+          "rtt_ms": 30.1,
+          "tick_gap_ms": 51.198023075121455
+        },
+        {
+          "ts": "2026-09-23T11:08:26.000Z",
+          "local_time": "2026-09-23T13:08:26.000+02:00",
+          "build": "beta-20260922-1",
+          "client_id": "881e6de3",
+          "frame_ms": 380,
+          "overlay_ms": 350.4,
+          "rtt_ms": 50.4,
+          "tick_gap_ms": 50.38632677071728
+        },
+        {
+          "ts": "2026-09-23T16:15:37.000Z",
+          "local_time": "2026-09-23T18:15:37.000+02:00",
+          "build": "beta-20260922-1",
+          "client_id": "6e6b96c6",
+          "frame_ms": 315,
+          "overlay_ms": 261.8,
+          "rtt_ms": 25,
+          "tick_gap_ms": 52.09027357406448
+        },
+        {
+          "ts": "2026-09-24T08:44:39.000Z",
+          "local_time": "2026-09-24T10:44:39.000+02:00",
+          "build": "beta-20260922-1",
+          "client_id": "0d2d490b",
+          "frame_ms": 359,
+          "overlay_ms": 323.1,
+          "rtt_ms": 37.3,
+          "tick_gap_ms": 50.93909638761543
+        },
+        {
+          "ts": "2026-09-24T17:36:21.000Z",
+          "local_time": "2026-09-24T19:36:21.000+02:00",
+          "build": "beta-20260922-1",
+          "client_id": "1bb74764",
+          "frame_ms": 607,
+          "overlay_ms": 543.6,
+          "rtt_ms": 53.7,
+          "tick_gap_ms": 51.651677596056835
+        },
+        {
+          "ts": "2026-09-24T18:16:26.000Z",
+          "local_time": "2026-09-24T20:16:26.000+02:00",
+          "build": "beta-20260924-3",
+          "client_id": "41a28e20",
+          "frame_ms": 523,
+          "overlay_ms": 471.1,
+          "rtt_ms": 58.4,
+          "tick_gap_ms": 50.961442014714706
+        }
+      ]
+    },
+    "Q18_farming_signature": {
+      "sql": "SELECT map,json_extract(raw,'$.server.score') AS score,count(*) AS n,round(min(duration_s),1) AS min_s,round(max(duration_s),1) AS max_s,sum(quarantined) AS quarantaines,min(ts) AS debut,max(ts) AS fin FROM events WHERE event='game_completed' GROUP BY map,score,short_win ORDER BY n DESC;",
+      "rows": [
+        {
+          "map": "vault",
+          "score": "[3,0]",
+          "n": 83,
+          "min_s": 54.3,
+          "max_s": 74.4,
+          "quarantaines": 17,
+          "debut": "2026-09-22T23:14:22.000Z",
+          "fin": "2026-09-25T00:32:54.000Z"
+        },
+        {
+          "map": "canopy",
+          "score": "[3,1]",
+          "n": 42,
+          "min_s": 314.9,
+          "max_s": 829.3,
+          "quarantaines": 0,
+          "debut": "2026-09-20T02:40:58.000Z",
+          "fin": "2026-09-26T20:18:30.000Z"
+        },
+        {
+          "map": "vault",
+          "score": "[3,1]",
+          "n": 41,
+          "min_s": 304.8,
+          "max_s": 829.7,
+          "quarantaines": 0,
+          "debut": "2026-09-20T11:48:27.000Z",
+          "fin": "2026-09-26T20:47:08.000Z"
+        },
+        {
+          "map": "vault",
+          "score": "[3,2]",
+          "n": 41,
+          "min_s": 299.9,
+          "max_s": 835.6,
+          "quarantaines": 0,
+          "debut": "2026-09-20T13:55:19.000Z",
+          "fin": "2026-09-26T20:02:32.000Z"
+        },
+        {
+          "map": "foundry",
+          "score": "[3,0]",
+          "n": 40,
+          "min_s": 170.8,
+          "max_s": 763.4,
+          "quarantaines": 0,
+          "debut": "2026-09-20T16:44:13.000Z",
+          "fin": "2026-09-26T15:47:28.000Z"
+        },
+        {
+          "map": "harbor",
+          "score": "[3,1]",
+          "n": 37,
+          "min_s": 305.2,
+          "max_s": 834.3,
+          "quarantaines": 0,
+          "debut": "2026-09-20T06:53:09.000Z",
+          "fin": "2026-09-26T20:26:39.000Z"
+        },
+        {
+          "map": "research",
+          "score": "[3,1]",
+          "n": 37,
+          "min_s": 309.2,
+          "max_s": 830.4,
+          "quarantaines": 0,
+          "debut": "2026-09-20T05:06:17.000Z",
+          "fin": "2026-09-26T18:35:15.000Z"
+        },
+        {
+          "map": "foundry",
+          "score": "[3,1]",
+          "n": 31,
+          "min_s": 307.1,
+          "max_s": 833.7,
+          "quarantaines": 0,
+          "debut": "2026-09-19T22:33:14.000Z",
+          "fin": "2026-09-26T20:20:38.000Z"
+        },
+        {
+          "map": "vault",
+          "score": "[1,3]",
+          "n": 31,
+          "min_s": 353.3,
+          "max_s": 798.8,
+          "quarantaines": 0,
+          "debut": "2026-09-20T21:58:35.000Z",
+          "fin": "2026-09-26T21:39:30.000Z"
+        },
+        {
+          "map": "canopy",
+          "score": "[3,2]",
+          "n": 30,
+          "min_s": 318,
+          "max_s": 834.3,
+          "quarantaines": 0,
+          "debut": "2026-09-20T07:49:01.000Z",
+          "fin": "2026-09-26T19:37:44.000Z"
+        },
+        {
+          "map": "harbor",
+          "score": "[3,2]",
+          "n": 28,
+          "min_s": 331.7,
+          "max_s": 810.1,
+          "quarantaines": 0,
+          "debut": "2026-09-20T07:44:08.000Z",
+          "fin": "2026-09-26T16:02:07.000Z"
+        },
+        {
+          "map": "canopy",
+          "score": "[1,3]",
+          "n": 26,
+          "min_s": 311.4,
+          "max_s": 838.8,
+          "quarantaines": 0,
+          "debut": "2026-09-19T23:59:17.000Z",
+          "fin": "2026-09-26T15:12:27.000Z"
+        },
+        {
+          "map": "harbor",
+          "score": "[1,3]",
+          "n": 25,
+          "min_s": 313.4,
+          "max_s": 792.3,
+          "quarantaines": 0,
+          "debut": "2026-09-20T00:35:47.000Z",
+          "fin": "2026-09-26T22:04:13.000Z"
+        },
+        {
+          "map": "research",
+          "score": "[1,3]",
+          "n": 25,
+          "min_s": 313,
+          "max_s": 792.1,
+          "quarantaines": 0,
+          "debut": "2026-09-20T21:35:25.000Z",
+          "fin": "2026-09-26T20:34:59.000Z"
+        },
+        {
+          "map": "research",
+          "score": "[3,2]",
+          "n": 25,
+          "min_s": 306.7,
+          "max_s": 823.7,
+          "quarantaines": 0,
+          "debut": "2026-09-20T17:48:06.000Z",
+          "fin": "2026-09-26T20:51:27.000Z"
+        },
+        {
+          "map": "canopy",
+          "score": "[3,0]",
+          "n": 21,
+          "min_s": 335.1,
+          "max_s": 824,
+          "quarantaines": 0,
+          "debut": "2026-09-20T00:58:05.000Z",
+          "fin": "2026-09-26T14:56:01.000Z"
+        },
+        {
+          "map": "foundry",
+          "score": "[3,2]",
+          "n": 20,
+          "min_s": 327.2,
+          "max_s": 832.4,
+          "quarantaines": 0,
+          "debut": "2026-09-20T01:41:46.000Z",
+          "fin": "2026-09-26T17:22:02.000Z"
+        },
+        {
+          "map": "harbor",
+          "score": "[0,3]",
+          "n": 20,
+          "min_s": 302.7,
+          "max_s": 805.1,
+          "quarantaines": 0,
+          "debut": "2026-09-20T11:02:39.000Z",
+          "fin": "2026-09-26T21:57:38.000Z"
+        },
+        {
+          "map": "harbor",
+          "score": "[2,3]",
+          "n": 20,
+          "min_s": 372.4,
+          "max_s": 833.3,
+          "quarantaines": 0,
+          "debut": "2026-09-20T05:31:28.000Z",
+          "fin": "2026-09-26T21:07:20.000Z"
+        },
+        {
+          "map": "research",
+          "score": "[3,0]",
+          "n": 17,
+          "min_s": 372.9,
+          "max_s": 798.9,
+          "quarantaines": 0,
+          "debut": "2026-09-20T14:18:20.000Z",
+          "fin": "2026-09-26T17:27:35.000Z"
+        },
+        {
+          "map": "harbor",
+          "score": "[3,0]",
+          "n": 16,
+          "min_s": 314.3,
+          "max_s": 781.3,
+          "quarantaines": 0,
+          "debut": "2026-09-21T00:48:55.000Z",
+          "fin": "2026-09-25T06:31:08.000Z"
+        },
+        {
+          "map": "vault",
+          "score": "[0,3]",
+          "n": 15,
+          "min_s": 351.1,
+          "max_s": 828.8,
+          "quarantaines": 0,
+          "debut": "2026-09-19T22:43:50.000Z",
+          "fin": "2026-09-25T10:38:02.000Z"
+        },
+        {
+          "map": "vault",
+          "score": "[3,0]",
+          "n": 15,
+          "min_s": 351,
+          "max_s": 811.8,
+          "quarantaines": 0,
+          "debut": "2026-09-20T19:21:50.000Z",
+          "fin": "2026-09-26T20:05:15.000Z"
+        },
+        {
+          "map": "canopy",
+          "score": "[0,3]",
+          "n": 14,
+          "min_s": 389.2,
+          "max_s": 806.7,
+          "quarantaines": 0,
+          "debut": "2026-09-20T09:41:06.000Z",
+          "fin": "2026-09-26T21:00:04.000Z"
+        },
+        {
+          "map": "canopy",
+          "score": "[2,3]",
+          "n": 14,
+          "min_s": 313.5,
+          "max_s": 824.3,
+          "quarantaines": 0,
+          "debut": "2026-09-19T22:45:44.000Z",
+          "fin": "2026-09-26T08:32:52.000Z"
+        },
+        {
+          "map": "foundry",
+          "score": "[1,3]",
+          "n": 14,
+          "min_s": 301.5,
+          "max_s": 751.4,
+          "quarantaines": 0,
+          "debut": "2026-09-20T06:16:07.000Z",
+          "fin": "2026-09-26T20:38:54.000Z"
+        },
+        {
+          "map": "research",
+          "score": "[0,3]",
+          "n": 12,
+          "min_s": 336.9,
+          "max_s": 785,
+          "quarantaines": 0,
+          "debut": "2026-09-19T23:10:45.000Z",
+          "fin": "2026-09-26T17:35:06.000Z"
+        },
+        {
+          "map": "foundry",
+          "score": "[0,3]",
+          "n": 10,
+          "min_s": 349,
+          "max_s": 819.6,
+          "quarantaines": 0,
+          "debut": "2026-09-20T18:44:36.000Z",
+          "fin": "2026-09-26T18:08:20.000Z"
+        },
+        {
+          "map": "foundry",
+          "score": "[2,3]",
+          "n": 10,
+          "min_s": 316.8,
+          "max_s": 733.6,
+          "quarantaines": 0,
+          "debut": "2026-09-20T12:11:05.000Z",
+          "fin": "2026-09-26T14:25:22.000Z"
+        },
+        {
+          "map": "vault",
+          "score": "[2,3]",
+          "n": 10,
+          "min_s": 370.8,
+          "max_s": 764.1,
+          "quarantaines": 0,
+          "debut": "2026-09-19T23:16:57.000Z",
+          "fin": "2026-09-26T19:00:13.000Z"
+        },
+        {
+          "map": "research",
+          "score": "[2,3]",
+          "n": 9,
+          "min_s": 330.6,
+          "max_s": 810.7,
+          "quarantaines": 0,
+          "debut": "2026-09-20T05:38:02.000Z",
+          "fin": "2026-09-23T20:47:17.000Z"
+        }
+      ]
+    },
+    "Q19_temoin_tick": {
+      "sql": "SELECT cause,tick_gap_ms>=150 AS tick_degrade,count(*) AS n,round(avg(rtt_ms),1) AS rtt_moyen,round(avg(frame_ms),1) AS frame_moyen FROM events WHERE event='perf_spike' GROUP BY cause,tick_degrade;",
+      "rows": [
+        {
+          "cause": "background",
+          "tick_degrade": 0,
+          "n": 157,
+          "rtt_moyen": 35.2,
+          "frame_moyen": 3630.4
+        },
+        {
+          "cause": "background",
+          "tick_degrade": 1,
+          "n": 1,
+          "rtt_moyen": 52.1,
+          "frame_moyen": 5326
+        },
+        {
+          "cause": "inconsistent",
+          "tick_degrade": 0,
+          "n": 70,
+          "rtt_moyen": 35.9,
+          "frame_moyen": 60.2
+        },
+        {
+          "cause": "network",
+          "tick_degrade": 0,
+          "n": 85,
+          "rtt_moyen": 810.2,
+          "frame_moyen": 44.6
+        },
+        {
+          "cause": "overlay",
+          "tick_degrade": 0,
+          "n": 262,
+          "rtt_moyen": 35.1,
+          "frame_moyen": 475.2
+        },
+        {
+          "cause": "render_other",
+          "tick_degrade": 0,
+          "n": 1045,
+          "rtt_moyen": 33.6,
+          "frame_moyen": 111.3
+        },
+        {
+          "cause": "render_other",
+          "tick_degrade": 1,
+          "n": 4,
+          "rtt_moyen": 23.9,
+          "frame_moyen": 77.8
+        },
+        {
+          "cause": "server_tick",
+          "tick_degrade": 1,
+          "n": 7,
+          "rtt_moyen": 641.2,
+          "frame_moyen": 34.4
+        },
+        {
+          "cause": "shader",
+          "tick_degrade": 0,
+          "n": 455,
+          "rtt_moyen": 34.4,
+          "frame_moyen": 509.6
+        },
+        {
+          "cause": "shader",
+          "tick_degrade": 1,
+          "n": 4,
+          "rtt_moyen": 33.1,
+          "frame_moyen": 388.5
+        },
+        {
+          "cause": "world",
+          "tick_degrade": 0,
+          "n": 20,
+          "rtt_moyen": 38.6,
+          "frame_moyen": 164.6
+        }
+      ]
+    },
+    "Q20_fps_pas_inverse": {
+      "sql": "SELECT cause,count(*) AS n,sum(abs(json_extract(raw,'$.report.fps')-1000.0/frame_ms)>5) AS fps_non_inverses FROM events WHERE event='perf_spike' GROUP BY cause;",
+      "rows": [
+        {
+          "cause": "background",
+          "n": 158,
+          "fps_non_inverses": 158
+        },
+        {
+          "cause": "inconsistent",
+          "n": 70,
+          "fps_non_inverses": 70
+        },
+        {
+          "cause": "network",
+          "n": 85,
+          "fps_non_inverses": 85
+        },
+        {
+          "cause": "overlay",
+          "n": 262,
+          "fps_non_inverses": 262
+        },
+        {
+          "cause": "render_other",
+          "n": 1049,
+          "fps_non_inverses": 1049
+        },
+        {
+          "cause": "server_tick",
+          "n": 7,
+          "fps_non_inverses": 7
+        },
+        {
+          "cause": "shader",
+          "n": 459,
+          "fps_non_inverses": 459
+        },
+        {
+          "cause": "world",
+          "n": 20,
+          "fps_non_inverses": 20
+        }
+      ]
+    },
+    "Q21_resume_anomalies": {
+      "sql": "SELECT count(*) AS rapports,sum(total_ms>frame_ms+10) AS travail_sup_frame,sum(json_extract(raw,'$.report.fps')>144) AS fps_sup_144,sum(json_extract(raw,'$.report.graphics.gpuTimerSupported')=0 AND json_extract(raw,'$.report.graphics.gpuRenderMs') IS NOT NULL) AS gpu_contradictoire FROM events WHERE event='perf_spike';",
+      "rows": [
+        {
+          "rapports": 2110,
+          "travail_sup_frame": 70,
+          "fps_sup_144": 70,
+          "gpu_contradictoire": 0
+        }
+      ]
+    },
+    "Q22_jours": {
+      "sql": "SELECT substr(local_time,1,10) AS jour,event,count(*) AS n FROM events GROUP BY jour,event;",
+      "rows": [
+        {
+          "jour": "2026-09-20",
+          "event": "game_completed",
+          "n": 107
+        },
+        {
+          "jour": "2026-09-20",
+          "event": "perf_spike",
+          "n": 281
+        },
+        {
+          "jour": "2026-09-21",
+          "event": "game_completed",
+          "n": 96
+        },
+        {
+          "jour": "2026-09-21",
+          "event": "perf_spike",
+          "n": 244
+        },
+        {
+          "jour": "2026-09-22",
+          "event": "game_completed",
+          "n": 91
+        },
+        {
+          "jour": "2026-09-22",
+          "event": "perf_spike",
+          "n": 242
+        },
+        {
+          "jour": "2026-09-23",
+          "event": "game_completed",
+          "n": 149
+        },
+        {
+          "jour": "2026-09-23",
+          "event": "perf_spike",
+          "n": 290
+        },
+        {
+          "jour": "2026-09-24",
+          "event": "game_completed",
+          "n": 105
+        },
+        {
+          "jour": "2026-09-24",
+          "event": "perf_spike",
+          "n": 274
+        },
+        {
+          "jour": "2026-09-25",
+          "event": "game_completed",
+          "n": 133
+        },
+        {
+          "jour": "2026-09-25",
+          "event": "perf_spike",
+          "n": 413
+        },
+        {
+          "jour": "2026-09-26",
+          "event": "game_completed",
+          "n": 97
+        },
+        {
+          "jour": "2026-09-26",
+          "event": "perf_spike",
+          "n": 361
+        },
+        {
+          "jour": "2026-09-27",
+          "event": "game_completed",
+          "n": 1
+        },
+        {
+          "jour": "2026-09-27",
+          "event": "perf_spike",
+          "n": 5
+        }
+      ]
+    },
+    "Q23_deploiement_cohorte": {
+      "sql": "SELECT build,count(*) AS rapports,sum(cause='overlay') AS overlay,count(DISTINCT CASE WHEN cause='overlay' THEN client_id END) AS clients_overlay,min(ts) AS premier_rapport FROM events WHERE event='perf_spike' AND cause<>'inconsistent' AND width>=2560 AND bloom=1 GROUP BY build;",
+      "rows": [
+        {
+          "build": "beta-20260919-2",
+          "rapports": 180,
+          "overlay": 1,
+          "clients_overlay": 1,
+          "premier_rapport": "2026-09-19T22:32:18.000Z"
+        },
+        {
+          "build": "beta-20260922-1",
+          "rapports": 137,
+          "overlay": 0,
+          "clients_overlay": 0,
+          "premier_rapport": "2026-09-22T10:16:14.000Z"
+        },
+        {
+          "build": "beta-20260924-3",
+          "rapports": 302,
+          "overlay": 186,
+          "clients_overlay": 31,
+          "premier_rapport": "2026-09-24T18:16:26.000Z"
+        },
+        {
+          "build": "beta-20260926-5",
+          "rapports": 92,
+          "overlay": 58,
+          "clients_overlay": 12,
+          "premier_rapport": "2026-09-26T14:06:13.000Z"
+        },
+        {
+          "build": "beta-20260926-6",
+          "rapports": 6,
+          "overlay": 4,
+          "clients_overlay": 1,
+          "premier_rapport": "2026-09-26T19:50:10.000Z"
+        }
+      ]
+    },
+    "Q24_controle_hors_cohorte": {
+      "sql": "SELECT CASE WHEN ts<'2026-09-24T16:00:00.000Z' THEN 'avant' ELSE 'apres' END AS periode,count(*) AS rapports,sum(cause='overlay') AS overlay FROM events WHERE event='perf_spike' AND cause<>'inconsistent' AND NOT(width>=2560 AND bloom=1) GROUP BY periode;",
+      "rows": [
+        {
+          "periode": "apres",
+          "rapports": 426,
+          "overlay": 6
+        },
+        {
+          "periode": "avant",
+          "rapports": 897,
+          "overlay": 7
+        }
+      ]
+    },
+    "Q25_farming_clients": {
+      "sql": "SELECT count(*) AS rapports,count(DISTINCT p.client_id) AS clients FROM events p JOIN events g ON p.server_id=g.server_id AND g.short_win=1 WHERE p.event='perf_spike';",
+      "rows": [
+        {
+          "rapports": 14,
+          "clients": 3
+        }
+      ]
+    },
+    "Q26_ordre_source": {
+      "sql": "WITH t AS(SELECT ts,lag(ts) OVER(ORDER BY source_index) AS precedent FROM events) SELECT sum(ts>precedent) AS remontees,sum(ts<precedent) AS descentes,sum(ts=precedent) AS egalites FROM t;",
+      "rows": [
+        {
+          "remontees": 2,
+          "descentes": 2871,
+          "egalites": 15
+        }
+      ]
+    },
+    "Q27_parts_sans_fin_par_cause": {
+      "sql": "SELECT p.cause,count(DISTINCT p.server_id) AS parties FROM events p WHERE p.event='perf_spike' AND NOT EXISTS(SELECT 1 FROM events g WHERE g.event='game_completed' AND g.server_id=p.server_id) GROUP BY p.cause;",
+      "rows": [
+        {
+          "cause": "inconsistent",
+          "parties": 70
+        },
+        {
+          "cause": "network",
+          "parties": 1
+        },
+        {
+          "cause": "render_other",
+          "parties": 1
+        },
+        {
+          "cause": "shader",
+          "parties": 2
+        }
+      ]
+    },
+    "Q28_apres_fin": {
+      "sql": "SELECT count(*) AS rapports_apres_fin FROM events p JOIN events g ON g.event='game_completed' AND p.server_id=g.server_id WHERE p.event='perf_spike' AND p.ts>g.ts;",
+      "rows": [
+        {
+          "rapports_apres_fin": 0
+        }
+      ]
+    },
+    "Q29_phase_build": {
+      "sql": "SELECT build,cause,count(*) AS n FROM events WHERE event='perf_spike' AND phase<>'play' GROUP BY build,cause;",
+      "rows": [
+        {
+          "build": "beta-20260919-2",
+          "cause": "shader",
+          "n": 158
+        },
+        {
+          "build": "beta-20260922-1",
+          "cause": "shader",
+          "n": 163
+        },
+        {
+          "build": "beta-20260924-3",
+          "cause": "shader",
+          "n": 99
+        },
+        {
+          "build": "beta-20260926-5",
+          "cause": "shader",
+          "n": 33
+        },
+        {
+          "build": "beta-20260926-6",
+          "cause": "shader",
+          "n": 6
+        }
+      ]
+    },
+    "Q30_seuils": {
+      "sql": "SELECT cause,min(overlay_ms) AS overlay_min,max(overlay_ms) AS overlay_max,min(frame_ms) AS frame_min,max(frame_ms) AS frame_max,round(avg(frame_ms),1) AS moyenne,round(avg(overlay_ms),1) AS overlay_moyen FROM events WHERE event='perf_spike' GROUP BY cause;",
+      "rows": [
+        {
+          "cause": "background",
+          "overlay_min": 0.4,
+          "overlay_max": 3,
+          "frame_min": 923,
+          "frame_max": 6237,
+          "moyenne": 3641.2,
+          "overlay_moyen": 1.6
+        },
+        {
+          "cause": "inconsistent",
+          "overlay_min": 0.4,
+          "overlay_max": 2.9,
+          "frame_min": 32,
+          "frame_max": 119,
+          "moyenne": 60.2,
+          "overlay_moyen": 1.8
+        },
+        {
+          "cause": "network",
+          "overlay_min": 0.4,
+          "overlay_max": 3,
+          "frame_min": 19,
+          "frame_max": 97,
+          "moyenne": 44.6,
+          "overlay_moyen": 1.7
+        },
+        {
+          "cause": "overlay",
+          "overlay_min": 222.8,
+          "overlay_max": 619,
+          "frame_min": 260,
+          "frame_max": 691,
+          "moyenne": 475.2,
+          "overlay_moyen": 421.1
+        },
+        {
+          "cause": "render_other",
+          "overlay_min": 0.4,
+          "overlay_max": 3,
+          "frame_min": 26,
+          "frame_max": 317,
+          "moyenne": 111.2,
+          "overlay_moyen": 1.7
+        },
+        {
+          "cause": "server_tick",
+          "overlay_min": 0.5,
+          "overlay_max": 2.9,
+          "frame_min": 26,
+          "frame_max": 42,
+          "moyenne": 34.4,
+          "overlay_moyen": 1.6
+        },
+        {
+          "cause": "shader",
+          "overlay_min": 0.4,
+          "overlay_max": 3,
+          "frame_min": 99,
+          "frame_max": 1467,
+          "moyenne": 508.6,
+          "overlay_moyen": 1.7
+        },
+        {
+          "cause": "world",
+          "overlay_min": 0.5,
+          "overlay_max": 2.8,
+          "frame_min": 106,
+          "frame_max": 206,
+          "moyenne": 164.6,
+          "overlay_moyen": 1.4
+        }
+      ]
+    },
+    "Q31_overlay_cohorte_detail": {
+      "sql": "SELECT count(*) AS n,count(DISTINCT client_id) AS clients,count(DISTINCT server_id) AS parties,min(ts) AS debut,max(ts) AS fin,round(avg(frame_ms),1) AS frame_moyen,round(avg(overlay_ms),1) AS overlay_moyen FROM events WHERE cause='overlay' AND width>=2560 AND bloom=1 AND ts>='2026-09-24T16:00:00.000Z';",
+      "rows": [
+        {
+          "n": 248,
+          "clients": 39,
+          "parties": 52,
+          "debut": "2026-09-24T18:16:26.000Z",
+          "fin": "2026-09-26T22:02:52.000Z",
+          "frame_moyen": 478.3,
+          "overlay_moyen": 423.7
+        }
+      ]
+    },
+    "Q32_tick_detail": {
+      "sql": "SELECT server_id,event,count(*) AS n,min(local_time) AS debut,max(local_time) AS fin,min(tick_gap_ms) AS gap_min,max(tick_gap_ms) AS gap_max FROM events WHERE tick_gap_ms>=150 GROUP BY server_id,event;",
+      "rows": [
+        {
+          "server_id": "0Zfp8XaEj",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-23T03:15:36.000+02:00",
+          "fin": "2026-09-23T03:15:36.000+02:00",
+          "gap_min": 860.1564407162368,
+          "gap_max": 860.1564407162368
+        },
+        {
+          "server_id": "1U83a7De5",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-21T03:27:10.000+02:00",
+          "fin": "2026-09-21T03:27:10.000+02:00",
+          "gap_min": 746.161100640893,
+          "gap_max": 746.161100640893
+        },
+        {
+          "server_id": "1U83a7De5",
+          "event": "perf_spike",
+          "n": 4,
+          "debut": "2026-09-21T03:16:44.000+02:00",
+          "fin": "2026-09-21T03:24:42.000+02:00",
+          "gap_min": 746.161100640893,
+          "gap_max": 746.161100640893
+        },
+        {
+          "server_id": "2zNIUwQl2",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-23T03:01:43.000+02:00",
+          "fin": "2026-09-23T03:01:43.000+02:00",
+          "gap_min": 601.5345985069871,
+          "gap_max": 601.5345985069871
+        },
+        {
+          "server_id": "2zNIUwQl2",
+          "event": "perf_spike",
+          "n": 1,
+          "debut": "2026-09-23T03:00:54.000+02:00",
+          "fin": "2026-09-23T03:00:54.000+02:00",
+          "gap_min": 601.5345985069871,
+          "gap_max": 601.5345985069871
+        },
+        {
+          "server_id": "4LdYHcfqK",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-23T03:05:13.000+02:00",
+          "fin": "2026-09-23T03:05:13.000+02:00",
+          "gap_min": 553.5312206111848,
+          "gap_max": 553.5312206111848
+        },
+        {
+          "server_id": "4XjB2G0kB",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-23T03:09:59.000+02:00",
+          "fin": "2026-09-23T03:09:59.000+02:00",
+          "gap_min": 605.9343003854156,
+          "gap_max": 605.9343003854156
+        },
+        {
+          "server_id": "4XjB2G0kB",
+          "event": "perf_spike",
+          "n": 4,
+          "debut": "2026-09-23T03:03:31.000+02:00",
+          "fin": "2026-09-23T03:09:22.000+02:00",
+          "gap_min": 605.9343003854156,
+          "gap_max": 605.9343003854156
+        },
+        {
+          "server_id": "5busgBOou",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-23T03:19:01.000+02:00",
+          "fin": "2026-09-23T03:19:01.000+02:00",
+          "gap_min": 744.5815871469676,
+          "gap_max": 744.5815871469676
+        },
+        {
+          "server_id": "5busgBOou",
+          "event": "perf_spike",
+          "n": 1,
+          "debut": "2026-09-23T03:17:55.000+02:00",
+          "fin": "2026-09-23T03:17:55.000+02:00",
+          "gap_min": 744.5815871469676,
+          "gap_max": 744.5815871469676
+        },
+        {
+          "server_id": "ZWO4Ltvud",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-23T03:08:10.000+02:00",
+          "fin": "2026-09-23T03:08:10.000+02:00",
+          "gap_min": 368.3557730913162,
+          "gap_max": 368.3557730913162
+        },
+        {
+          "server_id": "b50rYw7yk",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-23T03:12:05.000+02:00",
+          "fin": "2026-09-23T03:12:05.000+02:00",
+          "gap_min": 550.1685618236661,
+          "gap_max": 550.1685618236661
+        },
+        {
+          "server_id": "fYmbeHnaX",
+          "event": "game_completed",
+          "n": 1,
+          "debut": "2026-09-21T03:10:24.000+02:00",
+          "fin": "2026-09-21T03:10:24.000+02:00",
+          "gap_min": 746.5991258248687,
+          "gap_max": 746.5991258248687
+        },
+        {
+          "server_id": "fYmbeHnaX",
+          "event": "perf_spike",
+          "n": 6,
+          "debut": "2026-09-21T02:57:09.000+02:00",
+          "fin": "2026-09-21T03:10:14.000+02:00",
+          "gap_min": 746.5991258248687,
+          "gap_max": 746.5991258248687
+        }
+      ]
+    },
+    "Q33_farming_detail": {
+      "sql": "SELECT substr(local_time,1,10) AS jour,count(*) AS n,min(local_time) AS debut,max(local_time) AS fin,round(min(duration_s),2) AS min_s,round(max(duration_s),2) AS max_s FROM events WHERE short_win=1 GROUP BY jour;",
+      "rows": [
+        {
+          "jour": "2026-09-23",
+          "n": 45,
+          "debut": "2026-09-23T01:14:22.000+02:00",
+          "fin": "2026-09-23T03:46:35.000+02:00",
+          "min_s": 55.02,
+          "max_s": 74.43
+        },
+        {
+          "jour": "2026-09-25",
+          "n": 38,
+          "debut": "2026-09-25T00:44:29.000+02:00",
+          "fin": "2026-09-25T02:32:54.000+02:00",
+          "min_s": 54.35,
+          "max_s": 74.25
+        }
+      ]
+    },
+    "Q34_farming_attribution": {
+      "sql": "SELECT p.client_id,count(*) AS rapports,count(DISTINCT p.server_id) AS parties FROM events p JOIN events g ON p.server_id=g.server_id AND g.short_win=1 WHERE p.event='perf_spike' GROUP BY p.client_id;",
+      "rows": [
+        {
+          "client_id": "5db9ad62",
+          "rapports": 5,
+          "parties": 5
+        },
+        {
+          "client_id": "7247704e",
+          "rapports": 7,
+          "parties": 7
+        },
+        {
+          "client_id": "7440b319",
+          "rapports": 2,
+          "parties": 2
+        }
+      ]
+    }
+  }
+}

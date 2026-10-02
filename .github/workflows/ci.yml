@@ -1,0 +1,73 @@
+name: Qualité et livraison
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      demonstrate_test_failure:
+        description: "Démontrer le blocage par un test défaillant"
+        type: boolean
+        default: false
+      demonstrate_critical:
+        description: "Scanner une image de contrôle vulnérable, ne jamais publier"
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '24', cache: npm}
+      - run: npm ci
+      - run: npm run lint
+      - if: ${{ inputs.demonstrate_test_failure == true }}
+        run: cp ci/failing-test.js.txt test/intentional-failure.test.js
+      - run: npm test
+      - run: docker compose config -q
+      - run: docker run --rm -v "$PWD/observability/prometheus:/etc/prometheus:ro" --entrypoint promtool prom/prometheus:v3.6.0 check config /etc/prometheus/prometheus.yml
+      - run: docker run --rm -v "$PWD/observability/prometheus:/rules:ro" --entrypoint promtool prom/prometheus:v3.6.0 test rules /rules/rules.test.yml
+      - run: docker build -t candidate:${{ github.sha }} .
+      - name: Scan critique bloquant
+        env:
+          DEMO_CRITICAL: ${{ inputs.demonstrate_critical }}
+        run: |
+          set -eu
+          if [ "$DEMO_CRITICAL" = 'true' ]; then
+            docker pull node:18.0.0-alpine
+            docker image save node:18.0.0-alpine -o image.tar
+          else
+            docker image save candidate:${{ github.sha }} -o image.tar
+          fi
+          docker run --rm -v "$PWD:/work" aquasec/trivy:0.67.2 image --input /work/image.tar --scanners vuln --severity CRITICAL --exit-code 1 --format json --output /work/trivy.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: scan, path: trivy.json}
+      - run: docker image save candidate:${{ github.sha }} -o candidate.tar
+      - uses: actions/upload-artifact@v4
+        with: {name: candidate, path: candidate.tar, retention-days: 1}
+  publish:
+    needs: quality
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && inputs.demonstrate_critical != true && inputs.demonstrate_test_failure != true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {name: candidate}
+      - run: docker image load -i candidate.tar
+      - name: Publier exactement l’image contrôlée
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_ACTOR: ${{ github.actor }}
+          REPOSITORY: ${{ github.repository }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          set -eu
+          target="ghcr.io/$(printf '%s' "$REPOSITORY" | tr '[:upper:]' '[:lower:]'):sha-$COMMIT_SHA"
+          printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+          docker tag "candidate:$COMMIT_SHA" "$target"
+          docker push "$target"

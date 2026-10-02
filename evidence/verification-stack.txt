@@ -1,0 +1,111 @@
+
+> game-telemetry-demo@0.9.0 verify
+> node scripts/verify.js
+
+{
+  "counts": {
+    "game_completed": 779,
+    "perf_spike": 2110
+  },
+  "panels": [
+    {
+      "dashboard": "ue3-health",
+      "title": "Le service répond-il au scraping ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Combien de requêtes reçoit-on par seconde ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Quel est le p95 de latence de l’API ?",
+      "series": 2
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Quelles réponses HTTP renvoie l’API ?",
+      "series": 3
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Combien de parties sont actives ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Quels événements récents expliquent un incident ?",
+      "series": 30
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Combien de parties terminées sont observées ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Combien de victoires vault 3-0 durent moins de 90 s ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quand surviennent les victoires courtes ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quand le tick serveur dépasse-t-il 150 ms ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quelles parties faut-il examiner ?",
+      "series": 30
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quelles observations soutiennent le diagnostic serveur ?",
+      "series": 7
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Combien de rapports uniques contient l’export ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Combien présentent la signature overlay ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quelles signatures apparaissent et quand ?",
+      "series": 8
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quels builds concentrent les pics overlay ?",
+      "series": 5
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quels clients et configurations sont concernés ?",
+      "series": 30
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quels rapports sont incohérents ?",
+      "series": 30
+    }
+  ],
+  "live": [
+    {
+      "metric": {},
+      "value": [
+        1791381527.856,
+        "5280"
+      ]
+    }
+  ]
+}

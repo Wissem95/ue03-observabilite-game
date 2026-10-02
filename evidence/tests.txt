@@ -1,0 +1,146 @@
+
+> game-telemetry-demo@0.9.0 test
+> node --test test/*.test.js
+
+TAP version 13
+# Subtest: GET /healthz
+ok 1 - GET /healthz
+  ---
+  duration_ms: 34.504125
+  type: 'test'
+  ...
+# Subtest: POST /api/reports refuse un corps invalide
+ok 2 - POST /api/reports refuse un corps invalide
+  ---
+  duration_ms: 21.006833
+  type: 'test'
+  ...
+# Subtest: POST /api/reports accepte un rapport valide et le journalise
+ok 3 - POST /api/reports accepte un rapport valide et le journalise
+  ---
+  duration_ms: 11.279375
+  type: 'test'
+  ...
+# Subtest: signature overlay
+ok 4 - signature overlay
+  ---
+  duration_ms: 1.917375
+  type: 'test'
+  ...
+# Subtest: signature hidden
+ok 5 - signature hidden
+  ---
+  duration_ms: 1.02175
+  type: 'test'
+  ...
+# Subtest: signature shader
+ok 6 - signature shader
+  ---
+  duration_ms: 0.144792
+  type: 'test'
+  ...
+# Subtest: signature world
+ok 7 - signature world
+  ---
+  duration_ms: 0.198583
+  type: 'test'
+  ...
+# Subtest: signature network
+ok 8 - signature network
+  ---
+  duration_ms: 0.123375
+  type: 'test'
+  ...
+# Subtest: incohérence temporelle prioritaire, sans utiliser les fps seuls
+ok 9 - incohérence temporelle prioritaire, sans utiliser les fps seuls
+  ---
+  duration_ms: 0.209417
+  type: 'test'
+  ...
+# Subtest: champ manquant ne devient pas zéro
+ok 10 - champ manquant ne devient pas zéro
+  ---
+  duration_ms: 0.155625
+  type: 'test'
+  ...
+# Subtest: RTT v1 et v2 normalisés
+ok 11 - RTT v1 et v2 normalisés
+  ---
+  duration_ms: 0.973375
+  type: 'test'
+  ...
+# Subtest: date Paris UTC, doublon exact et conflit séparés
+ok 12 - date Paris UTC, doublon exact et conflit séparés
+  ---
+  duration_ms: 26.818875
+  type: 'test'
+  ...
+# Subtest: JSON tronqué quarantiné, rapport suivant préservé
+ok 13 - JSON tronqué quarantiné, rapport suivant préservé
+  ---
+  duration_ms: 2.400042
+  type: 'test'
+  ...
+# Subtest: heure hiver utilise le bon décalage
+ok 14 - heure hiver utilise le bon décalage
+  ---
+  duration_ms: 1.696542
+  type: 'test'
+  ...
+# Subtest: durée simulation corrigée pour éviter les faux positifs farming
+ok 15 - durée simulation corrigée pour éviter les faux positifs farming
+  ---
+  duration_ms: 0.223917
+  type: 'test'
+  ...
+# Subtest: types optionnels malformés ne font pas tomber la collecte
+ok 16 - types optionnels malformés ne font pas tomber la collecte
+  ---
+  duration_ms: 0.099584
+  type: 'test'
+  ...
+# Subtest: RED capture JSON invalide et borne les routes inconnues
+ok 17 - RED capture JSON invalide et borne les routes inconnues
+  ---
+  duration_ms: 62.745
+  type: 'test'
+  ...
+# Subtest: build non reconnu ramené à other
+ok 18 - build non reconnu ramené à other
+  ---
+  duration_ms: 3.437292
+  type: 'test'
+  ...
+# Subtest: durée absente ne produit pas une observation zéro
+ok 19 - durée absente ne produit pas une observation zéro
+  ---
+  duration_ms: 2.007458
+  type: 'test'
+  ...
+# Subtest: un rapport v1 contient les champs attendus
+ok 20 - un rapport v1 contient les champs attendus
+  ---
+  duration_ms: 2.294292
+  type: 'test'
+  ...
+# Subtest: un rapport v2 deplace rttMs dans network
+ok 21 - un rapport v2 deplace rttMs dans network
+  ---
+  duration_ms: 0.432125
+  type: 'test'
+  ...
+# Subtest: l'export texte commence par l'en-tete console
+ok 22 - l'export texte commence par l'en-tete console
+  ---
+  duration_ms: 18.97425
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 292.358667

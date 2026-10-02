@@ -1,0 +1,757 @@
+{
+  "checked_at": "2026-10-08T09:51:18.725Z",
+  "health": {
+    "status": "ok"
+  },
+  "targets": {
+    "status": "success",
+    "data": {
+      "activeTargets": [
+        {
+          "discoveredLabels": {
+            "__address__": "app:8080",
+            "__metrics_path__": "/metrics",
+            "__scheme__": "http",
+            "__scrape_interval__": "5s",
+            "__scrape_timeout__": "5s",
+            "job": "game"
+          },
+          "labels": {
+            "instance": "app:8080",
+            "job": "game"
+          },
+          "scrapePool": "game",
+          "scrapeUrl": "http://app:8080/metrics",
+          "globalUrl": "http://app:8080/metrics",
+          "lastError": "",
+          "lastScrape": "2026-10-08T09:51:14.429124792Z",
+          "lastScrapeDuration": 0.006973417,
+          "health": "up",
+          "scrapeInterval": "5s",
+          "scrapeTimeout": "5s"
+        },
+        {
+          "discoveredLabels": {
+            "__address__": "localhost:9090",
+            "__metrics_path__": "/metrics",
+            "__scheme__": "http",
+            "__scrape_interval__": "5s",
+            "__scrape_timeout__": "5s",
+            "job": "prometheus"
+          },
+          "labels": {
+            "instance": "localhost:9090",
+            "job": "prometheus"
+          },
+          "scrapePool": "prometheus",
+          "scrapeUrl": "http://localhost:9090/metrics",
+          "globalUrl": "http://5710ee7b1ffa:9090/metrics",
+          "lastError": "",
+          "lastScrape": "2026-10-08T09:51:18.328392882Z",
+          "lastScrapeDuration": 0.007128375,
+          "health": "up",
+          "scrapeInterval": "5s",
+          "scrapeTimeout": "5s"
+        }
+      ],
+      "droppedTargets": [],
+      "droppedTargetCounts": {
+        "game": 0,
+        "prometheus": 0
+      }
+    }
+  },
+  "requests": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1791453078.769,
+            "691"
+          ]
+        }
+      ]
+    }
+  },
+  "rules": {
+    "status": "success",
+    "data": {
+      "groups": [
+        {
+          "name": "game",
+          "file": "/etc/prometheus/rules.yml",
+          "rules": [
+            {
+              "name": "game:http_rps:rate5m",
+              "query": "sum(rate(game_http_requests_total[5m]))",
+              "health": "ok",
+              "evaluationTime": 0.003855583,
+              "lastEvaluation": "2026-10-08T09:51:17.46899684Z",
+              "type": "recording"
+            },
+            {
+              "name": "game:http_error_ratio:rate5m",
+              "query": "(sum(rate(game_http_requests_total{status=~\"5..\"}[5m])) or vector(0)) / clamp_min(sum(rate(game_http_requests_total[5m])), 0.001)",
+              "health": "ok",
+              "evaluationTime": 0.001465167,
+              "lastEvaluation": "2026-10-08T09:51:17.472901007Z",
+              "type": "recording"
+            },
+            {
+              "name": "game:overlay_ratio:rate5m",
+              "query": "sum(rate(game_reports_total{cause=\"overlay\"}[5m])) / clamp_min(sum(rate(game_reports_total{cause!~\"inconsistent|background|shader|unknown\"}[5m])), 0.001)",
+              "health": "ok",
+              "evaluationTime": 0.00054675,
+              "lastEvaluation": "2026-10-08T09:51:17.474380215Z",
+              "type": "recording"
+            },
+            {
+              "state": "inactive",
+              "name": "ServiceUnavailable",
+              "query": "up{job=\"game\"} == 0",
+              "duration": 60,
+              "keepFiringFor": 0,
+              "labels": {
+                "severity": "critical"
+              },
+              "annotations": {
+                "summary": "Le service est injoignable depuis une minute"
+              },
+              "alerts": [],
+              "health": "ok",
+              "evaluationTime": 0.000317375,
+              "lastEvaluation": "2026-10-08T09:51:17.474944007Z",
+              "type": "alerting"
+            },
+            {
+              "state": "inactive",
+              "name": "ApiErrors",
+              "query": "game:http_error_ratio:rate5m > 0.05 and game:http_rps:rate5m > 1",
+              "duration": 120,
+              "keepFiringFor": 0,
+              "labels": {
+                "severity": "warning"
+              },
+              "annotations": {
+                "summary": "Plus de 5 % de réponses 5xx sous trafic significatif"
+              },
+              "alerts": [],
+              "health": "ok",
+              "evaluationTime": 0.000219459,
+              "lastEvaluation": "2026-10-08T09:51:17.475268382Z",
+              "type": "alerting"
+            },
+            {
+              "state": "pending",
+              "name": "OverlayRegression",
+              "query": "game:overlay_ratio:rate5m > 0.15 and sum(increase(game_reports_total[5m])) > 20",
+              "duration": 120,
+              "keepFiringFor": 0,
+              "labels": {
+                "severity": "warning"
+              },
+              "annotations": {
+                "summary": "La signature overlay dépasse 15 % des rapports éligibles"
+              },
+              "alerts": [
+                {
+                  "labels": {
+                    "alertname": "OverlayRegression",
+                    "severity": "warning"
+                  },
+                  "annotations": {
+                    "summary": "La signature overlay dépasse 15 % des rapports éligibles"
+                  },
+                  "state": "pending",
+                  "activeAt": "2026-10-08T09:50:42.464895383Z",
+                  "value": "2.222955515294141e-01"
+                }
+              ],
+              "health": "ok",
+              "evaluationTime": 0.001659,
+              "lastEvaluation": "2026-10-08T09:51:17.475493715Z",
+              "type": "alerting"
+            },
+            {
+              "state": "inactive",
+              "name": "InconsistentTelemetry",
+              "query": "sum(increase(game_integrity_signals_total{kind=\"inconsistent\"}[10m])) > 2",
+              "duration": 60,
+              "keepFiringFor": 0,
+              "labels": {
+                "severity": "warning"
+              },
+              "annotations": {
+                "summary": "Au moins trois rapports temporellement incohérents"
+              },
+              "alerts": [],
+              "health": "ok",
+              "evaluationTime": 0.000191667,
+              "lastEvaluation": "2026-10-08T09:51:17.477165632Z",
+              "type": "alerting"
+            },
+            {
+              "state": "inactive",
+              "name": "ServerTickDegraded",
+              "query": "sum(increase(game_reports_total{cause=\"server_tick\"}[5m])) >= 3",
+              "duration": 60,
+              "keepFiringFor": 0,
+              "labels": {
+                "severity": "warning"
+              },
+              "annotations": {
+                "summary": "Plusieurs clients signalent RTT et tick dégradés"
+              },
+              "alerts": [],
+              "health": "ok",
+              "evaluationTime": 0.000116125,
+              "lastEvaluation": "2026-10-08T09:51:17.477361048Z",
+              "type": "alerting"
+            },
+            {
+              "state": "inactive",
+              "name": "RepeatedShortWins",
+              "query": "sum(increase(game_integrity_signals_total{kind=\"short_win\",origin=\"fleet\"}[10m])) >= 5",
+              "duration": 60,
+              "keepFiringFor": 0,
+              "labels": {
+                "severity": "warning"
+              },
+              "annotations": {
+                "summary": "Au moins cinq victoires vault 3-0 en moins de 90 secondes de jeu"
+              },
+              "alerts": [],
+              "health": "ok",
+              "evaluationTime": 0.000084375,
+              "lastEvaluation": "2026-10-08T09:51:17.477482423Z",
+              "type": "alerting"
+            }
+          ],
+          "interval": 5,
+          "limit": 0,
+          "evaluationTime": 0.009273542,
+          "lastEvaluation": "2026-10-08T09:51:17.468296923Z"
+        }
+      ]
+    }
+  },
+  "historical": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {
+            "event": "game_completed"
+          },
+          "value": [
+            1790467200,
+            "779"
+          ]
+        },
+        {
+          "metric": {
+            "event": "perf_spike"
+          },
+          "value": [
+            1790467200,
+            "2110"
+          ]
+        }
+      ],
+      "stats": {
+        "summary": {
+          "bytesProcessedPerSecond": 316815323,
+          "linesProcessedPerSecond": 208468,
+          "totalBytesProcessed": 33038875,
+          "totalLinesProcessed": 21740,
+          "execTime": 0.104284334,
+          "queueTime": 2.56274771,
+          "subqueries": 0,
+          "totalEntriesReturned": 2,
+          "splits": 192,
+          "shards": 192,
+          "totalPostFilterLines": 21740,
+          "totalStructuredMetadataBytesProcessed": 652200
+        },
+        "querier": {
+          "store": {
+            "totalChunksRef": 355,
+            "totalChunksDownloaded": 355,
+            "chunksDownloadTime": 18501874,
+            "queryReferencedStructuredMetadata": false,
+            "chunk": {
+              "headChunkBytes": 0,
+              "headChunkLines": 0,
+              "decompressedBytes": 33038875,
+              "decompressedLines": 21740,
+              "compressedBytes": 9104854,
+              "totalDuplicates": 0,
+              "postFilterLines": 21740,
+              "headChunkStructuredMetadataBytes": 0,
+              "decompressedStructuredMetadataBytes": 652200
+            },
+            "chunkRefsFetchTime": 20802036,
+            "congestionControlLatency": 0,
+            "pipelineWrapperFilteredLines": 0
+          }
+        },
+        "ingester": {
+          "totalReached": 0,
+          "totalChunksMatched": 0,
+          "totalBatches": 0,
+          "totalLinesSent": 0,
+          "store": {
+            "totalChunksRef": 0,
+            "totalChunksDownloaded": 0,
+            "chunksDownloadTime": 0,
+            "queryReferencedStructuredMetadata": false,
+            "chunk": {
+              "headChunkBytes": 0,
+              "headChunkLines": 0,
+              "decompressedBytes": 0,
+              "decompressedLines": 0,
+              "compressedBytes": 0,
+              "totalDuplicates": 0,
+              "postFilterLines": 0,
+              "headChunkStructuredMetadataBytes": 0,
+              "decompressedStructuredMetadataBytes": 0
+            },
+            "chunkRefsFetchTime": 0,
+            "congestionControlLatency": 0,
+            "pipelineWrapperFilteredLines": 0
+          }
+        },
+        "cache": {
+          "chunk": {
+            "entriesFound": 355,
+            "entriesRequested": 355,
+            "entriesStored": 0,
+            "bytesReceived": 9236944,
+            "bytesSent": 0,
+            "requests": 372,
+            "downloadTime": 2861005,
+            "queryLengthServed": 0
+          },
+          "index": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "result": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "statsResult": {
+            "entriesFound": 192,
+            "entriesRequested": 192,
+            "entriesStored": 21,
+            "bytesReceived": 48048,
+            "bytesSent": 0,
+            "requests": 213,
+            "downloadTime": 1026874,
+            "queryLengthServed": 617333000000000
+          },
+          "volumeResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "seriesResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "labelResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "instantMetricResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          }
+        },
+        "index": {
+          "totalChunks": 0,
+          "postFilterChunks": 0,
+          "shardsDuration": 0,
+          "usedBloomFilters": false
+        }
+      }
+    }
+  },
+  "live": {
+    "status": "success",
+    "data": {
+      "resultType": "vector",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1791453078.887,
+            "1391"
+          ]
+        }
+      ],
+      "stats": {
+        "summary": {
+          "bytesProcessedPerSecond": 330846523,
+          "linesProcessedPerSecond": 229582,
+          "totalBytesProcessed": 4009088,
+          "totalLinesProcessed": 2782,
+          "execTime": 0.012117667,
+          "queueTime": 0.000051375,
+          "subqueries": 0,
+          "totalEntriesReturned": 1,
+          "splits": 0,
+          "shards": 1,
+          "totalPostFilterLines": 2782,
+          "totalStructuredMetadataBytesProcessed": 83460
+        },
+        "querier": {
+          "store": {
+            "totalChunksRef": 0,
+            "totalChunksDownloaded": 0,
+            "chunksDownloadTime": 0,
+            "queryReferencedStructuredMetadata": false,
+            "chunk": {
+              "headChunkBytes": 0,
+              "headChunkLines": 0,
+              "decompressedBytes": 0,
+              "decompressedLines": 0,
+              "compressedBytes": 0,
+              "totalDuplicates": 0,
+              "postFilterLines": 0,
+              "headChunkStructuredMetadataBytes": 0,
+              "decompressedStructuredMetadataBytes": 0
+            },
+            "chunkRefsFetchTime": 0,
+            "congestionControlLatency": 0,
+            "pipelineWrapperFilteredLines": 0
+          }
+        },
+        "ingester": {
+          "totalReached": 1,
+          "totalChunksMatched": 4,
+          "totalBatches": 4,
+          "totalLinesSent": 1391,
+          "store": {
+            "totalChunksRef": 4,
+            "totalChunksDownloaded": 4,
+            "chunksDownloadTime": 183208,
+            "queryReferencedStructuredMetadata": false,
+            "chunk": {
+              "headChunkBytes": 0,
+              "headChunkLines": 0,
+              "decompressedBytes": 4009088,
+              "decompressedLines": 2782,
+              "compressedBytes": 449258,
+              "totalDuplicates": 1391,
+              "postFilterLines": 2782,
+              "headChunkStructuredMetadataBytes": 0,
+              "decompressedStructuredMetadataBytes": 83460
+            },
+            "chunkRefsFetchTime": 95083,
+            "congestionControlLatency": 0,
+            "pipelineWrapperFilteredLines": 0
+          }
+        },
+        "cache": {
+          "chunk": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "index": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "result": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "statsResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "volumeResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "seriesResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "labelResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          },
+          "instantMetricResult": {
+            "entriesFound": 0,
+            "entriesRequested": 0,
+            "entriesStored": 0,
+            "bytesReceived": 0,
+            "bytesSent": 0,
+            "requests": 0,
+            "downloadTime": 0,
+            "queryLengthServed": 0
+          }
+        },
+        "index": {
+          "totalChunks": 0,
+          "postFilterChunks": 0,
+          "shardsDuration": 0,
+          "usedBloomFilters": false
+        }
+      }
+    }
+  },
+  "grafana": [
+    {
+      "id": 1,
+      "uid": "ag0lir1o8p5hcf",
+      "orgId": 1,
+      "title": "Observabilité du jeu",
+      "uri": "db/observabilite-du-jeu",
+      "url": "/dashboards/f/ag0lir1o8p5hcf/observabilite-du-jeu",
+      "slug": "",
+      "type": "dash-folder",
+      "tags": [],
+      "isStarred": false,
+      "sortMeta": 0,
+      "isDeleted": false
+    },
+    {
+      "id": 2,
+      "uid": "ue3-health",
+      "orgId": 1,
+      "title": "1 · Santé du service",
+      "uri": "db/1-c2b7-sante-du-service",
+      "url": "/d/ue3-health/1-c2b7-sante-du-service",
+      "slug": "",
+      "type": "dash-db",
+      "tags": [
+        "UE03",
+        "observabilite"
+      ],
+      "isStarred": false,
+      "folderId": 1,
+      "folderUid": "ag0lir1o8p5hcf",
+      "folderTitle": "Observabilité du jeu",
+      "folderUrl": "/dashboards/f/ag0lir1o8p5hcf/observabilite-du-jeu",
+      "sortMeta": 0,
+      "isDeleted": false
+    },
+    {
+      "id": 4,
+      "uid": "ue3-performance",
+      "orgId": 1,
+      "title": "2 · Performance côté joueur",
+      "uri": "db/2-c2b7-performance-cote-joueur",
+      "url": "/d/ue3-performance/2-c2b7-performance-cote-joueur",
+      "slug": "",
+      "type": "dash-db",
+      "tags": [
+        "UE03",
+        "observabilite"
+      ],
+      "isStarred": false,
+      "folderId": 1,
+      "folderUid": "ag0lir1o8p5hcf",
+      "folderTitle": "Observabilité du jeu",
+      "folderUrl": "/dashboards/f/ag0lir1o8p5hcf/observabilite-du-jeu",
+      "sortMeta": 0,
+      "isDeleted": false
+    },
+    {
+      "id": 3,
+      "uid": "ue3-integrity",
+      "orgId": 1,
+      "title": "3 · Activité et intégrité",
+      "uri": "db/3-c2b7-activite-et-integrite",
+      "url": "/d/ue3-integrity/3-c2b7-activite-et-integrite",
+      "slug": "",
+      "type": "dash-db",
+      "tags": [
+        "UE03",
+        "observabilite"
+      ],
+      "isStarred": false,
+      "folderId": 1,
+      "folderUid": "ag0lir1o8p5hcf",
+      "folderTitle": "Observabilité du jeu",
+      "folderUrl": "/dashboards/f/ag0lir1o8p5hcf/observabilite-du-jeu",
+      "sortMeta": 0,
+      "isDeleted": false
+    }
+  ],
+  "panels": [
+    {
+      "dashboard": "ue3-health",
+      "title": "Le service répond-il au scraping ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Combien de requêtes reçoit-on par seconde ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Quel est le p95 de latence de l’API ?",
+      "series": 2
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Quelles réponses HTTP renvoie l’API ?",
+      "series": 3
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Combien de parties sont actives ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-health",
+      "title": "Quels événements récents expliquent un incident ?",
+      "series": 30
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Combien de parties terminées sont observées ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Combien de victoires vault 3-0 durent moins de 90 s ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quand surviennent les victoires courtes ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quand le tick serveur dépasse-t-il 150 ms ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quelles parties faut-il examiner ?",
+      "series": 30
+    },
+    {
+      "dashboard": "ue3-integrity",
+      "title": "Quelles observations soutiennent le diagnostic serveur ?",
+      "series": 7
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Combien de rapports uniques contient l’export ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Combien présentent la signature overlay ?",
+      "series": 1
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quelles signatures apparaissent et quand ?",
+      "series": 8
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quels builds concentrent les pics overlay ?",
+      "series": 5
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quels clients et configurations sont concernés ?",
+      "series": 30
+    },
+    {
+      "dashboard": "ue3-performance",
+      "title": "Quels rapports sont incohérents ?",
+      "series": 30
+    }
+  ]
+}
