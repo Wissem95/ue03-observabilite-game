@@ -1,0 +1,44 @@
+openapi: 3.0.3
+info:
+  title: Télémétrie du jeu
+  version: 1.0.0
+servers: [{url: 'http://localhost:18080'}]
+paths:
+  /healthz:
+    get:
+      summary: Vérifier le processus HTTP
+      responses:
+        '200': {description: Service disponible}
+  /api/games:
+    get:
+      summary: Consulter les parties simulées actives
+      responses:
+        '200': {description: Liste des états de partie}
+  /api/reports:
+    post:
+      summary: Recevoir un rapport client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [report, server]
+              properties:
+                report:
+                  type: object
+                  required: [id]
+                  properties:
+                    id: {type: string, pattern: '^P-[0-9a-f]{8}-\d+$'}
+                  additionalProperties: true
+                server: {type: object, additionalProperties: true}
+      responses:
+        '202': {description: Rapport accepté et journalisé}
+        '400': {description: Structure absente ou JSON invalide}
+        '413': {description: Corps supérieur à 64 ko}
+        '422': {description: Identifiant de rapport invalide}
+  /metrics:
+    get:
+      summary: Exporter les métriques Prometheus
+      responses:
+        '200': {description: Métriques au format text/plain version 0.0.4}
